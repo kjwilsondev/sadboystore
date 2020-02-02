@@ -12,7 +12,17 @@ class Cart(db.Model):
 
     # Cart fields
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    cost = db.Column(db.Integer, nullable=False)
+
     user = db.relationship("User", back_populates="cart")
     user_id = db.Column(db.Integer, db.ForeignKey('user.public_id'))
-    
-    # TODO: One to Many: Cart Items
+    items = db.relationship('Item', backref='cart', lazy=True)
+
+    # @staticmethod
+    # def sum_cost(self):
+    #     for item in Item.query.filter_by(cart_id=cart_id).all():
+    #         cost += item.cost
+    #     self.cost = cost
+    #     return
+
+
