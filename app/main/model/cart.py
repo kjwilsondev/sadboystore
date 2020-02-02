@@ -12,11 +12,7 @@ class Cart(db.Model):
 
     # Cart fields
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    set_on = db.Column(db.DateTime, nullable=False)
-    length = db.Column(db.String, nullable=False)
-    amount = db.Column(db.Float, nullable=False)
-    success = db.Column(db.Boolean, nullable=False)
-
-    # Relationships
-    public_id = db.Column(db.String, db.ForeignKey('user.public_id'))
-    # user = db.relationship("User", backref=db.backref("budgets", order_by="desc(Budget.set_on)"))
+    user = db.relationship("User", back_populates="cart")
+    user_id = db.Column(db.Integer, db.ForeignKey('user.public_id'))
+    
+    # TODO: One to Many: Cart Items
