@@ -1,13 +1,16 @@
 from .. import db, flask_bcrypt
 import datetime
 from ..config import key
+from app.main.model.user import User
 
-# Budget class inherits from db.Model class which declares the class as a model for sqlalchemy
-class Budget(db.Model):
-    """ Budget Model for storing budget related details """
-    __tablename__ = "budget"
+# Cart class inherits from db.Model class which declares the class as a model for sqlalchemy
+class Cart(db.Model):
+    """
+    Cart Model for storing cart related details
+    """
+    __tablename__ = "cart"
 
-    # Budget fields
+    # Cart fields
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     set_on = db.Column(db.DateTime, nullable=False)
     length = db.Column(db.String, nullable=False)

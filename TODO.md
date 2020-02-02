@@ -92,6 +92,7 @@ Add to Closet
 ## Item
 
 - id [Integer]
+- name
 - type [String]
   - types: shirt
 - cost [Integer]
