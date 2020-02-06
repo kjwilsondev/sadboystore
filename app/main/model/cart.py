@@ -20,8 +20,10 @@ class Cart(db.Model):
     items = db.relationship('Item', backref='cart', lazy=True)
 
     @staticmethod
-    def sum_cost(self):
+    def sum_cost(self): # O(n)
         cost = 0.0
+        # n = number of items
+        # n iterations => O(n)
         for item in Item.query.filter_by(cart_id=self.cart_id).all():
             cost += item.cost
         self.cost = cost
