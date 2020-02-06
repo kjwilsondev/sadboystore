@@ -2,6 +2,7 @@ from .. import db, flask_bcrypt
 import datetime
 from ..config import key
 from app.main.model.user import User
+from app.main.model.item import Item
 
 # Cart class inherits from db.Model class which declares the class as a model for sqlalchemy
 class Cart(db.Model):
@@ -21,12 +22,12 @@ class Cart(db.Model):
     items = db.relationship('Item', backref='cart', lazy=True)
 
     @staticmethod
-    def add_cost(self, cost): # O(1)
+    def add_to_cost(self, cost): # O(1)
         self.cost += cost
         return self.cost
 
     @staticmethod
-    def sum_cost(self): # O(n)
+    def update_cost(self): # O(n)
         cost = 0.0
         # n = number of items
         # n iterations => O(n)

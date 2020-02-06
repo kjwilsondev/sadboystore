@@ -10,16 +10,16 @@ from app.main import create_app, db
 
 from app.main.model import user
 from app.main.model import blacklist
-from app.main.model import budget
+# from app.main.model import item
+# from app.main.model import closet
+# from app.main.model import cart
+# from app.main.model import order
 
 from flask_cors import CORS
 
-# print(os.getenv('BOILERPLATE_ENV'))
 app = create_app(os.getenv('FLASK_ENV'))
 CORS(app)
 # app.config.from_object('app.main.config.TestingConfig')
-
-# app = create_app('dev')
 
 app.register_blueprint(blueprint)
 
