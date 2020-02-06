@@ -10,19 +10,19 @@ from .main.controller.budget_controller import api as budget_ns
 blueprint = Blueprint('api', __name__)
 
 # TODO: Authorizations
-authorizations = {
-    'apikey': {
-        'type': 'apiKey',
-        'in': 'header',
-        'name': 'X-API-KEY'
-    }
-}
+# authorizations = {
+#     'apikey': {
+#         'type': 'apiKey',
+#         'in': 'header',
+#         'name': 'X-API-KEY'
+#     }
+# }
 
 api = Api(blueprint,
-          title='Budge',
+          title='Sad Boy Store Backend',
           version='1.0',
-          authorizations=authorizations,
-          description='instant budgeting for spending on the go'
+          # authorizations=authorizations,
+          description='sad boy merch'
           )
 
 api.add_namespace(user_ns, path='/user')

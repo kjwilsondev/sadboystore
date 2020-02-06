@@ -35,7 +35,7 @@ Location
 - id [Integer]
 - User [ForeignKey],[integer]
   - None if empty
-- items [ForeignKey],[Array]
+- items [ForeignKey]
 
 ### Cart Fuctions
 

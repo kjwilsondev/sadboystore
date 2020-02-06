@@ -12,12 +12,18 @@ class Cart(db.Model):
 
     # Cart fields
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    set_on = db.Column(db.DateTime, nullable=False)
     cost = db.Column(db.Float, nullable=False)
     # One to One
     user = db.relationship("User", back_populates="cart")
     user_id = db.Column(db.Integer, db.ForeignKey('user.public_id'))
     # One to Many
     items = db.relationship('Item', backref='cart', lazy=True)
+
+    @staticmethod
+    def add_cost(self, cost): # O(1)
+        self.cost += cost
+        return self.cost
 
     @staticmethod
     def sum_cost(self): # O(n)
