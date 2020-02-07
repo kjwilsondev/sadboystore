@@ -9,7 +9,7 @@ api = CartDto.api
 _cart = CartDto.cart
 _user = UserDto.user
 
-@api.route('/carts')
+@api.route('')
 class CartList(Resource):
     @api.doc('list of carts')
     @api.marshal_list_with(_cart, envelope='data')
@@ -17,7 +17,7 @@ class CartList(Resource):
         """List all carts"""
         return get_all_carts()
 
-@api.route('/<public_id>/cart')
+@api.route('/<public_id>')
 @api.param('public_id', 'The User identifier')
 @api.response(404, 'User not found.')
 class Cart(Resource):

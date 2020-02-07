@@ -26,5 +26,5 @@ api = Api(blueprint,
           )
 
 api.add_namespace(user_ns, path='/user')
-api.add_namespace(cart_ns, path='/user')
+api.add_namespace(cart_ns, path='/carts')
 api.add_namespace(auth_ns)

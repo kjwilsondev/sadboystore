@@ -7,7 +7,7 @@ from ..service.user_service import create_user, get_all_users, get_a_user
 api = UserDto.api
 _user = UserDto.user
 
-@api.route('/')
+@api.route('')
 class UserList(Resource):
     @api.doc('list of registered users')
     @api.marshal_list_with(_user, envelope='data')
