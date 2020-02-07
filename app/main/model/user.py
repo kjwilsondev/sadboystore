@@ -26,8 +26,8 @@ class User(db.Model):
     lname = db.Column(db.String(100))
 
     # Store fields
+    cart = db.relationship("Cart", backref="user.public_id", uselist=False)
     # closet = db.relationship("Closet", uselist=False, back_populates="user.public_id")
-    # cart = db.relationship("Cart", uselist=False, back_populates="user.public_id")
     # orders = db.relationship("Order", lazy='select', backref=db.backref("user.public_id", lazy='joined'))
 
     def __repr__(self):

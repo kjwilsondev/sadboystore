@@ -18,11 +18,11 @@ def create_user(data):
             email=data['email'],
             password=data['password']
         )
-        new_user.cart = create_cart(new_user)
-        print(f"new cart {new_user.cart}")
         # create closet
         # new_user.closet = Closet()
         save_changes(new_user)
+        new_user.cart = create_cart(new_user.public_id)
+        print(f"new cart {new_user.cart}")
         return generate_token(new_user)
     else:
         response_object = {
@@ -40,7 +40,7 @@ def generate_token(user):
             'message': 'Successfully registered.',
             'authorization': auth_token.decode(),
             'public_id': user.public_id,
-            'cart': user.cart
+            'cart': user.cart.id
         }
         return response_object, 201
     except Exception as e:
@@ -51,28 +51,30 @@ def generate_token(user):
         return response_object, 401
 
 def get_all_users():
-    return User.query.all()
+    # returns all user in order of when they registered
+    # most recent will be at the top
+    return User.query.order_by(User.registered_on).all()
 
 def get_a_user(public_id):
     return User.query.filter_by(public_id=public_id).first()
 
-def delete_user(public_id):
-    user = User.query.filter_by(email=data['email']).first()
-    if user:
-        db.session.delete(self)
-        db.session.commit()
-        response_object = {
-            'status': 'success',
-            'message': 'User deleted.'
-        }
-        return response_object, 201
-    else:
-        response_object = {
-            'status': 'fail',
-            'message': 'User not found.',
-        }
-        return response_object, 409
-
+# TEST TO SEE IF COMMENTS ARE DELETED AS WELL
+# def delete_user(public_id):
+#     user = User.query.filter_by(email=data['email']).first()
+#     if user:
+#         db.session.delete(self)
+#         db.session.commit()
+#         response_object = {
+#             'status': 'success',
+#             'message': 'User deleted.'
+#         }
+#         return response_object, 201
+#     else:
+#         response_object = {
+#             'status': 'fail',
+#             'message': 'User not found.',
+#         }
+#         return response_object, 409
 
 def save_changes(data):
     # commits the changes to database

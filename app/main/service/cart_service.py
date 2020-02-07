@@ -3,20 +3,22 @@ import datetime
 
 from app.main import db
 from app.main.model.user import User
+from app.main.model.cart import Cart
 
 
 def create_cart(public_id):
-    user = User.query.filter_by(public_id=public_id).first()
     new_cart = Cart(
         cost = 0.0,
-        user_id = user.public_id
+        user_id = public_id
     )
     db.session.add(new_cart)
     db.session.commit()
     return new_cart
 
 def get_all_carts():
-    return Cart.query.all()
+    # returns carts in order of cart cost
+    # most expensive will be at the top
+    return Cart.query.order_by(Cart.cost.desc()).all()
 
 def get_a_cart(public_id):
     user = User.query.filter_by(public_id=public_id).first()
@@ -26,13 +28,9 @@ def get_a_cart(public_id):
 def empty_cart(public_id):
     user = User.query.filter_by(public_id=public_id).first()
     cart = user.cart
-    user.cart = Cart(
-        cost = 0.0,
-        user_id = user.public_id
-    )
+    user.cart = create_cart(public_id)
     print("new cart created")
-    user.cart = new_cart
     db.session.delete(cart)
-    db.session.add(new_cart)
+    print("old cart deleted")
     db.session.commit()
     return user.cart

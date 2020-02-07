@@ -17,5 +17,6 @@ class UserDto:
 class CartDto:
     api = Namespace('cart', description='cart operations')
     cart = api.model('cart', {
-        'user_id': fields.String(required=True, description='user id')
+        'user_id': fields.String(required=True, description='cart user id'),
+        'cost': fields.String(required=True, description='cart cost')
     })
