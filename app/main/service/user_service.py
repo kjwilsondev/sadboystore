@@ -22,7 +22,7 @@ def create_user(data):
         # new_user.closet = Closet()
         save_changes(new_user)
         new_user.cart = create_cart(new_user.public_id)
-        print(f"new cart {new_user.cart}")
+        # print(f"new cart {new_user.cart}")
         return generate_token(new_user)
     else:
         response_object = {
