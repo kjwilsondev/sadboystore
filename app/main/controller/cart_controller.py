@@ -35,7 +35,6 @@ class Cart(Resource):
     
     @api.doc('empty a cart')
     @api.response(201, 'Cart empty.')
-    @api.marshal_with(_cart)
     def delete(self, public_id):
         """get a cart given its identifier"""
         user = get_a_user(public_id)
