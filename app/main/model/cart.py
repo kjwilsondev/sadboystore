@@ -21,6 +21,7 @@ class Cart(db.Model):
 
     # One to Many
     # items = db.relationship('Item', backref='cart', lazy=True)
+    # size = db.Column(db.Integer)
 
     @classmethod
     def add_to_cost(self, cost): # O(1)

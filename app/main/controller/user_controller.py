@@ -7,7 +7,7 @@ from ..service.user_service import create_user, get_all_users, get_a_user
 api = UserDto.api
 _user = UserDto.user
 
-@api.route('')
+@api.route('/')
 class UserList(Resource):
     @api.doc('list of registered users')
     @api.marshal_list_with(_user, envelope='data')
@@ -23,7 +23,7 @@ class UserList(Resource):
         data = request.json
         return create_user(data=data)
 
-@api.route('/<public_id>')
+@api.route('/<public_id>/')
 @api.param('public_id', 'The User identifier')
 @api.response(404, 'User not found.')
 class User(Resource):

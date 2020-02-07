@@ -33,4 +33,9 @@ def empty_cart(public_id):
     db.session.delete(cart)
     print("old cart deleted")
     db.session.commit()
-    return user.cart
+    response_object = {
+        'status': 'success',
+        'message': 'Cart empty',
+    }
+    print(user.cart)
+    return response_object, 201
