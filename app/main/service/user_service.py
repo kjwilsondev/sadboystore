@@ -38,7 +38,7 @@ def generate_token(user):
         response_object = {
             'status': 'success',
             'message': 'Successfully registered.',
-            'authorization': auth_token.decode(),
+            'Authorization': auth_token.decode(),
             'public_id': user.public_id,
             'cart': user.cart.id
         }
