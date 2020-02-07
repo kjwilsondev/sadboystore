@@ -3,11 +3,13 @@ import datetime
 
 from app.main import db
 from app.main.model.user import User
-# from app.main.model.cart import Cart
+from app.main.model.cart import Cart
+
+from ..service.cart_service import create_cart
 # from app.main.model.closet import Closet
 
 
-def save_new_user(data):
+def create_user(data):
     user = User.query.filter_by(email=data['email']).first()
     if not user:
         new_user = User(
@@ -16,8 +18,8 @@ def save_new_user(data):
             email=data['email'],
             password=data['password']
         )
-        # create cart
-        # new_user.cart = Cart()
+        new_user.cart = create_cart(new_user)
+        print(f"new cart {new_user.cart}")
         # create closet
         # new_user.closet = Closet()
         save_changes(new_user)
@@ -36,7 +38,9 @@ def generate_token(user):
         response_object = {
             'status': 'success',
             'message': 'Successfully registered.',
-            'Authorization': auth_token.decode()
+            'authorization': auth_token.decode(),
+            'public_id': user.public_id,
+            'cart': user.cart
         }
         return response_object, 201
     except Exception as e:

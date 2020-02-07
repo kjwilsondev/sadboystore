@@ -2,7 +2,7 @@ from flask import request
 from flask_restplus import Resource
 
 from ..util.dto import UserDto
-from ..service.user_service import save_new_user, get_all_users, get_a_user
+from ..service.user_service import create_user, get_all_users, get_a_user
 
 api = UserDto.api
 _user = UserDto.user
@@ -21,7 +21,7 @@ class UserList(Resource):
     def post(self):
         """Creates a new User """
         data = request.json
-        return save_new_user(data=data)
+        return create_user(data=data)
 
 @api.route('/<public_id>')
 @api.param('public_id', 'The User identifier')
