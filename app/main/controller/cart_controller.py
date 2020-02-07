@@ -14,7 +14,7 @@ class CartList(Resource):
     @api.doc('list of carts')
     @api.marshal_list_with(_cart, envelope='data')
     def get(self):
-        """List all budgets"""
+        """List all carts"""
         return get_all_carts()
 
 @api.route('/<public_id>/cart')

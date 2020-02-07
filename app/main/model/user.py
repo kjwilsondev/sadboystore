@@ -14,16 +14,17 @@ class User(db.Model):
     public_id = db.Column(db.String(100), unique=True)
     registered_on = db.Column(db.DateTime)
 
-    # User Contact fields
-    email = db.Column(db.String(255), unique=True, nullable=False)
-    phone = db.Column(db.String(10), unique=True)
-    address = db.Column(db.String(100))
-    city = db.Column(db.String(100))
-    zip_code = db.Column(db.String(5))
-
     # User fields
     fname = db.Column(db.String(100))
     lname = db.Column(db.String(100))
+    
+    # User Contact fields
+    email = db.Column(db.String(255), unique=True, nullable=False)
+    password_hash = db.Column(db.String(100))
+    phone = db.Column(db.String(10)) # , unique=True)
+    address = db.Column(db.String(100))
+    city = db.Column(db.String(100))
+    zip_code = db.Column(db.String(5))
 
     # Store fields
     cart = db.relationship("Cart", backref="user.public_id", uselist=False)
