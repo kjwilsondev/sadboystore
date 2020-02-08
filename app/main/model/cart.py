@@ -5,7 +5,6 @@ from ..config import key
 from app.main.model.user import User
 # from app.main.model.item import Item
 
-# Cart class inherits from db.Model class which declares the class as a model for sqlalchemy
 class Cart(db.Model):
     """
     Cart Model for storing cart related details
@@ -16,11 +15,11 @@ class Cart(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     cost = db.Column(db.Float)
 
-    # One to One
-    user_id = db.Column(db.String, db.ForeignKey('user.public_id'), nullable=False)
+    # User fields
+    user_id = db.Column(db.String(100), db.ForeignKey('user.public_id'), nullable=False)
 
-    # One to Many
-    # items = db.relationship('Item', backref='cart', lazy=True)
+    # Item fields
+    items = db.relationship('Item', backref='cart', lazy=True)
     # size = db.Column(db.Integer)
 
     @classmethod
