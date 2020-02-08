@@ -22,7 +22,7 @@ response_object = {
     'message': 'Successfully registered.',
     'authorization': auth_token.decode(),
     'public_id': user.public_id,
-    'cart': user.cart
+    'cart': user.cart_items
 }
 ```
 

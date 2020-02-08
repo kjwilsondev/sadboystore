@@ -30,8 +30,7 @@ class Cart(Resource):
         if not user:
             api.abort(404)
         else:
-            return user.cart
-            # return user.cart.items
+            return user.cart_items
     
     @api.doc('empty a cart')
     @api.response(201, 'Cart empty.')

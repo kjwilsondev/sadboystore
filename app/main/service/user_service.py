@@ -21,8 +21,8 @@ def create_user(data):
         # create closet
         # new_user.closet = Closet()
         save_changes(new_user)
-        new_user.cart = create_cart(new_user.public_id)
-        # print(f"new cart {new_user.cart}")
+        new_user.cart_items = create_cart(new_user.public_id)
+        # print(f"new cart {new_user.cart_items}")
         return generate_token(new_user)
     else:
         response_object = {
@@ -39,8 +39,7 @@ def generate_token(user):
             'status': 'success',
             'message': 'Successfully registered.',
             'Authorization': auth_token.decode(),
-            'public_id': user.public_id,
-            'cart': user.cart.id
+            'public_id': user.public_id
         }
         return response_object, 201
     except Exception as e:

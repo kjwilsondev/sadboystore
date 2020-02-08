@@ -10,6 +10,7 @@ class User(db.Model):
     User Model for storing user related details
     """
     __tablename__ = "user"
+    
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     public_id = db.Column(db.String(100), unique=True)
     registered_on = db.Column(db.DateTime)
@@ -17,7 +18,7 @@ class User(db.Model):
     # User fields
     fname = db.Column(db.String(100))
     lname = db.Column(db.String(100))
-    
+
     # User Contact fields
     email = db.Column(db.String(255), unique=True, nullable=False)
     password_hash = db.Column(db.String(100))
@@ -27,9 +28,9 @@ class User(db.Model):
     zip_code = db.Column(db.String(5))
 
     # Store fields
-    cart = db.relationship("Cart", backref="user.public_id", uselist=False)
-    # closet = db.relationship("Closet", uselist=False, back_populates="user.public_id")
-    # orders = db.relationship("Order", lazy='select', backref=db.backref("user.public_id", lazy='joined'))
+    cart_items = db.relationship("Item", secondary="cart")
+    # closet_items = db.relationship("Item", secondary="closet")
+    # orders = db.relationship("Item", secondary="order")
 
     def __repr__(self):
         return "<User '{}'>".format(self.username)

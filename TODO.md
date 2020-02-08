@@ -96,3 +96,4 @@ Add to Closet
 - type [String]
   - types: shirt
 - cost [Integer]
+- picture

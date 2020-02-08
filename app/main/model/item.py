@@ -12,10 +12,14 @@ class Item(db.Model):
 
     # Item fields
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    name = db.Column(db.String, nullable=False, default="sadface")
-    piece = db.Column(db.String, nullable=False, default="shirt") # type of clothing
-    cost = db.Column(db.Float, nullable=False, default=0.0)
+    name = db.Column(db.String(100), nullable=False, default="sadface")
+    piece = db.Column(db.String(50), nullable=False, default="shirt") # type of clothing
+    cost = db.Column(db.Float, nullable=False, default=15.0)
     # picture = db.relationship("Picture", backref="item.name", lazy=True)
 
     # Cart fields
-    cart_id = db.Column(db.String(100), db.ForeignKey('cart.user_id'), nullable=False)
+    carts = db.relationship("User", secondary="cart")
+    # closets = db.relationship("User", secondary="closet")
+    # orders = db.relationship("User", secondary="order")
+    # parents = relationship("Association", back_populates="child")
+    
