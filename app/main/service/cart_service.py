@@ -25,14 +25,13 @@ def create_cart(public_id):
     db.session.commit()
     return new_cart
 
-def get_all_carts():
-    # returns carts in order of cart cost
-    # most expensive will be at the top
-    return Cart.query.order_by(Cart.cost.desc()).all()
-
-def get_a_cart(public_id):
+def get_cart_items(public_id):
     user = User.query.filter_by(public_id=public_id).first()
     return user.cart_items
+
+def get_cart_users(item_name):
+    item = Item.query.filter_by(item_name=item_name).first()
+    return item.carts
 
 def empty_cart(public_id):
     user = User.query.filter_by(public_id=public_id).first()

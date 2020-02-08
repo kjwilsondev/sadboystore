@@ -18,3 +18,4 @@ class Cart(db.Model):
     # Item fields
     item_name = db.Column(db.String(100), db.ForeignKey('item.name'))
     item = relationship("Item", back_populates="carts")
+    quantity = db.Column(db.Integer, default=0)
