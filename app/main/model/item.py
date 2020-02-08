@@ -2,7 +2,6 @@ from .. import db, flask_bcrypt
 import datetime
 from ..config import key
 
-from app.main.model.cart import Cart
 
 class Item(db.Model):
     """
@@ -21,5 +20,4 @@ class Item(db.Model):
     carts = db.relationship("User", secondary="cart")
     # closets = db.relationship("User", secondary="closet")
     # orders = db.relationship("User", secondary="order")
-    # parents = relationship("Association", back_populates="child")
     

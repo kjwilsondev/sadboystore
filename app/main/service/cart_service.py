@@ -9,6 +9,12 @@ from app.main.model.cart import Cart
 # Edit cart_service methods to match new class
 # Add to Cart
 # Calculate cost of cart
+# response object for 
+# {
+#     cart user,
+#     cart cost,
+#     cart length,
+# }
 
 def create_cart(public_id):
     new_cart = Cart(

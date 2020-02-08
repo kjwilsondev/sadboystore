@@ -1,10 +1,6 @@
 from .. import db, flask_bcrypt
-import datetime
 from ..config import key
 
-# Do I need these?
-from app.main.model.user import User
-from app.main.model.item import Item
 
 class Cart(db.Model):
     """
