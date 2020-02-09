@@ -9,18 +9,42 @@ class Item(db.Model):
     """
     __tablename__ = "item"
 
-    # Item fields
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    release_date = db.Column(db.DateTime)
+
+    # Item fields
     name = db.Column(db.String(100), nullable=False, default="sadface")
     piece = db.Column(db.String(50), nullable=False, default="shirt") # type of clothing
     cost = db.Column(db.Float, nullable=False, default=15.0)
+
+    # Item View fields
     color = db.Column(db.String(50))
-    quanity = db.Column(db.String(50)
-    # decided to save picture on frontend
+    size = db.Column(db.String(10), nullable=False)
+    available = db.Column(db.Integer, nullable=False)
     # picture = db.relationship("Picture", backref="item.name", lazy=True)
 
-    # Cart fields
+    # Store fields
     carts = db.relationship("User", secondary="cart")
     # closets = db.relationship("User", secondary="closet")
     # orders = db.relationship("User", secondary="order")
     
+    @classmethod
+    def update_cost(self, cost):
+        old_cost, self.cost = self.cost, cost
+        response_object = {
+            'status': 'success',
+            'message': 'Cost updated',
+            'old_cost': old_cost,
+            'new_cost': new_cost
+        }
+        return response_object, 201
+    
+    @classmethod
+    def update_availability(self, update):
+        self.available += update
+        response_object = {
+            'status': 'success',
+            'message': 'Availability updated',
+            'available': self.available
+        }
+        return response_object, 201
