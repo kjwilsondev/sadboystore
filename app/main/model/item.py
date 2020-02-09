@@ -2,6 +2,7 @@ from .. import db, flask_bcrypt
 import datetime
 from ..config import key
 
+from ..model.user import User
 
 class Item(db.Model):
     """

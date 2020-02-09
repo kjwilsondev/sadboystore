@@ -1,6 +1,7 @@
 from .. import db, flask_bcrypt
 from ..config import key
 
+from ..model.item import Item
 
 class CartItem(db.Model):
     """
@@ -15,9 +16,9 @@ class CartItem(db.Model):
     quantity = db.Column(db.Integer, default=1)
 
     # User fields
-    cart_id = db.Column(db.String(100), db.ForeignKey('cart.user_id'))
+    cart_id = db.Column(db.String(100), db.ForeignKey('cart.user_id'), primary_key=True)
     cart = db.relationship("Cart", back_populates="items")
 
     # Item fields
-    item_name = db.Column(db.String(100), db.ForeignKey('item.public_id'))
+    item_id = db.Column(db.String(100), db.ForeignKey('item.public_id'), primary_key=True, unique=True)
     item = db.relationship("Item", back_populates="carts")

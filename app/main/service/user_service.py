@@ -10,6 +10,7 @@ from ..service.cart_service import create_cart
 
 
 def create_user(data):
+    print("we made it")
     user = User.query.filter_by(email=data['email']).first()
     if not user:
         new_user = User(
