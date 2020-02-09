@@ -4,7 +4,7 @@ from flask_restplus import Resource
 from ..util.dto import CartDto
 from ..util.dto import UserDto
 from ..service.user_service import get_a_user
-from ..service.cart_service import get_cart_items, get_all_carts, empty_cart
+from ..service.cart_service import *
 
 api = CartDto.api
 _cart = CartDto.cart

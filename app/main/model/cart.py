@@ -14,8 +14,7 @@ class Cart(db.Model):
     size = db.Column(db.Integer, default=0)
 
     # User fields
-    user_id = db.Column(db.String(100), db.ForeignKey('user.public_id'))
-    user = db.relationship("User", back_populates="cart")
+    user_id = db.Column(db.String(100), db.ForeignKey('user.public_id'), nullable=False)
 
     # Item fields
     items = db.relationship("Item", secondary="cart_item")

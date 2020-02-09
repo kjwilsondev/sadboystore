@@ -19,7 +19,6 @@ from app.main.model.cart import Cart
 def create_cart(public_id):
     new_cart = Cart(
         public_id=str(uuid.uuid4()),
-        cost = 0.0,
         user_id = public_id
     )
     db.session.add(new_cart)
@@ -45,3 +44,5 @@ def empty_cart(public_id):
         'message': 'Cart empty'
     }
     return response_object, 201
+
+__all__ = ['create_cart', 'get_cart_items', 'get_all_carts', 'empty_cart']
