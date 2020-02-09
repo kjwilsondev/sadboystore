@@ -97,3 +97,10 @@ Add to Closet
   - types: shirt
 - cost [Integer]
 - picture
+
+## Item View
+
+Color
+Images for each color
+Quantity
+Sizes

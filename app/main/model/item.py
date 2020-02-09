@@ -14,6 +14,9 @@ class Item(db.Model):
     name = db.Column(db.String(100), nullable=False, default="sadface")
     piece = db.Column(db.String(50), nullable=False, default="shirt") # type of clothing
     cost = db.Column(db.Float, nullable=False, default=15.0)
+    color = db.Column(db.String(50))
+    quanity = db.Column(db.String(50)
+    # decided to save picture on frontend
     # picture = db.relationship("Picture", backref="item.name", lazy=True)
 
     # Cart fields
