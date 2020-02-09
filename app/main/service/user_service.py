@@ -50,13 +50,13 @@ def generate_token(user):
         }
         return response_object, 401
 
+def get_a_user(public_id):
+    return User.query.filter_by(public_id=public_id).first()
+
 def get_all_users():
     # returns all user in order of when they registered
     # most recent will be at the top
     return User.query.order_by(User.registered_on).all()
-
-def get_a_user(public_id):
-    return User.query.filter_by(public_id=public_id).first()
 
 # TEST TO SEE IF COMMENTS ARE DELETED AS WELL
 # def delete_user(public_id):
@@ -80,3 +80,5 @@ def save_changes(data):
     # commits the changes to database
     db.session.add(data)
     db.session.commit()
+
+__all__ = ['create_user', 'generate_token', 'get_a_user', 'get_all_users']

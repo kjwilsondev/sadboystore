@@ -26,7 +26,7 @@ class Item(db.Model):
     # picture = db.relationship("Picture", backref="item.name", lazy=True)
 
     # Store fields
-    carts = db.relationship("Cart", secondary="cart_item")
+    _carts = db.relationship("Cart", secondary="cart_item")
     # closets = db.relationship("User", secondary="closet")
     # orders = db.relationship("User", secondary="order")
     
