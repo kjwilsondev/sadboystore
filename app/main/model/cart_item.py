@@ -8,7 +8,7 @@ class CartItem(db.Model):
         cart items in user cart
         carts with item in their cart
     """
-    __tablename__ = "cart_items"
+    __tablename__ = "cart_item"
 
     # Cart fields
     id = db.Column(db.Integer, autoincrement=True, primary_key=True)
@@ -19,5 +19,5 @@ class CartItem(db.Model):
     cart = relationship("Cart", back_populates="items")
 
     # Item fields
-    item_name = db.Column(db.String(100), db.ForeignKey('item.name'))
+    item_name = db.Column(db.String(100), db.ForeignKey('item.public_id'))
     item = relationship("Item", back_populates="carts")

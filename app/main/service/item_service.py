@@ -6,9 +6,8 @@ from app.main.model.user import User
 from app.main.model.cart import Cart
 
 # TODO:
-# delete item
+# get cart items
 
-# create item ✅
 def create_item(data):
     name = data['name']
     piece = data['piece']
@@ -51,7 +50,6 @@ def get_items(name):
     items = Item.query.filter_by(name=name).all()
     return items
 
-# get item info
 def get_item_info(name):
     items = Item.query.filter_by(name=name).all()
     cost = items[0].cost
@@ -84,17 +82,14 @@ def get_item_info(name):
         }
         return response_object, 409
 
-def delete_item(data):
-    name = data['name']
-    piece = data['piece']
-    color = data['color']
-    size = data['size']
-    item = Item.query.filter_by(
-        name=name,
-        piece=piece,
-        color=color,
-        size=size
-    ).first()
+# returns user carts that contain item
+def get_cart_users(item_name):
+    item = Item.query.filter_by(item_name=item_name).first()
+    return item.carts
+
+def delete_item(item_public_id):
+    item = Item.query.filter_by(public_id=item_public_id).first()
+    name = item.name
     if item:
         db.session.delete(item)
         db.session.commit()

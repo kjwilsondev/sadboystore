@@ -10,6 +10,7 @@ class Item(db.Model):
     __tablename__ = "item"
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    public_id = db.Column(db.String(100), unique=True)
     release_date = db.Column(db.DateTime)
 
     # Item fields
@@ -24,7 +25,7 @@ class Item(db.Model):
     # picture = db.relationship("Picture", backref="item.name", lazy=True)
 
     # Store fields
-    carts = db.relationship("Cart", secondary="cart_items")
+    carts = db.relationship("Cart", secondary="cart_item")
     # closets = db.relationship("User", secondary="closet")
     # orders = db.relationship("User", secondary="order")
     
@@ -35,7 +36,7 @@ class Item(db.Model):
             'status': 'success',
             'message': 'Cost updated',
             'old_cost': old_cost,
-            'new_cost': new_cost
+            'cost': self.cost
         }
         return response_object, 201
     
@@ -46,5 +47,19 @@ class Item(db.Model):
             'status': 'success',
             'message': 'Availability updated',
             'available': self.available
+        }
+        return response_object, 201
+
+    @classmethod
+    def add_to_cart(self, public_id):
+        user = User.query.filter_by(public_id=public_id).first()
+        user.cart.items.append(self)
+        user.cart.cost += self.cost
+        user.cart.size += 1
+        print(user.cart.items)
+        response_object = {
+            'status': 'success',
+            'message': 'Item added to cart',
+            'item': self.name
         }
         return response_object, 201
