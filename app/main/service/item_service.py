@@ -6,13 +6,13 @@ from app.main.model.user import User
 from app.main.model.cart import Cart
 
 # TODO:
-# create item
 # get item
 # check item sizes
 # check item colors
 # check item availability
 # delete item
 
+# create item ✅
 def create_item(data):
     name = data['name']
     piece = data['piece']
@@ -50,13 +50,43 @@ def create_item(data):
         }
         return response_object, 409
 
-def get_cart_items(public_id):
-    user = User.query.filter_by(public_id=public_id).first()
-    return user.cart_items
+# get items by name
+def get_items(name):
+    items = Item.query.filter_by(name=name).all()
+    return items
 
-def get_cart_users(item_name):
-    item = Item.query.filter_by(item_name=item_name).first()
-    return item.carts
+# get item by 
+def get_item_info(name):
+    items = Item.query.filter_by(name=name).all()
+    cost = items[0].cost
+    colors = {} # histgram (key: color, value: available)
+    sizes = {} # histgram (key: size, value: available)
+
+    if items:
+        for item in items:
+            if item.color in colors:
+                colors[item.color] += 1
+            else:
+                colors[item.color] = 1
+            if item.size in sizes:
+                sizes[item.size] += 1
+            else:
+                sizes[item.size] = 1
+
+        response_object = {
+            'status': 'success',
+            'message': 'Items located',
+            'cost': cost,
+            'colors': colors,
+            'sizes': sizes
+        }
+        return response_object, 201
+    else:
+        response_object = {
+            'status': 'fail',
+            'message': 'Item not found.',
+        }
+        return response_object, 409
 
 def empty_cart(public_id):
     user = User.query.filter_by(public_id=public_id).first()
