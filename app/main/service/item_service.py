@@ -6,10 +6,6 @@ from app.main.model.user import User
 from app.main.model.cart import Cart
 
 # TODO:
-# get item
-# check item sizes
-# check item colors
-# check item availability
 # delete item
 
 # create item ✅
@@ -23,7 +19,7 @@ def create_item(data):
         piece=piece,
         color=color,
         size=size
-        ).first()
+    ).first()
     if not item:
         new_item = Item(
             release_date=datetime.datetime.utcnow(),
@@ -55,7 +51,7 @@ def get_items(name):
     items = Item.query.filter_by(name=name).all()
     return items
 
-# get item by 
+# get item info
 def get_item_info(name):
     items = Item.query.filter_by(name=name).all()
     cost = items[0].cost
@@ -88,14 +84,29 @@ def get_item_info(name):
         }
         return response_object, 409
 
-def empty_cart(public_id):
-    user = User.query.filter_by(public_id=public_id).first()
-    cart = user.cart_items
-    user.cart_items = create_cart(public_id)
-    db.session.delete(cart)
-    db.session.commit()
-    response_object = {
-        'status': 'success',
-        'message': 'Cart empty'
-    }
-    return response_object, 201
+def delete_item(data):
+    name = data['name']
+    piece = data['piece']
+    color = data['color']
+    size = data['size']
+    item = Item.query.filter_by(
+        name=name,
+        piece=piece,
+        color=color,
+        size=size
+    ).first()
+    if item:
+        db.session.delete(item)
+        db.session.commit()
+        response_object = {
+            'status': 'success',
+            'message': 'Successfully deleted item.',
+            'item_name': name,
+        }
+        return response_object, 201
+    else:
+        response_object = {
+            'status': 'fail',
+            'message': 'Item not found.',
+        }
+        return response_object, 409

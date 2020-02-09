@@ -28,7 +28,7 @@ class User(db.Model):
     zip_code = db.Column(db.String(5))
 
     # Store fields
-    cart_items = db.relationship("Item", secondary="cart")
+    cart = db.relationship("Cart", backref="user", uselist=False)
     # closet_items = db.relationship("Item", secondary="closet")
     # orders = db.relationship("Item", secondary="order")
 
