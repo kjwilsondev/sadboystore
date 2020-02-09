@@ -4,7 +4,7 @@ from flask_restplus import Resource
 from ..util.dto import CartDto
 from ..util.dto import UserDto
 from ..service.user_service import get_a_user
-from ..service.cart_service import get_a_cart, get_all_carts, empty_cart
+from ..service.cart_service import get_cart_items, get_all_carts, empty_cart
 
 api = CartDto.api
 _cart = CartDto.cart
@@ -26,11 +26,11 @@ class Cart(Resource):
     @api.marshal_with(_cart)
     def get(self, public_id):
         """get a cart given its identifier"""
-        user = get_a_user(public_id)
-        if not user:
+        items = get_cart_items(public_id)
+        if not items:
             api.abort(404)
         else:
-            return user.cart_items
+            return items
     
     @api.doc('empty a cart')
     @api.response(201, 'Cart empty.')

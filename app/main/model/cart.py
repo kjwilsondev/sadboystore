@@ -15,10 +15,10 @@ class Cart(db.Model):
 
     # User fields
     user_id = db.Column(db.String(100), db.ForeignKey('user.public_id'))
-    user = relationship("User", back_populates="cart")
+    user = db.relationship("User", back_populates="cart")
 
     # Item fields
-    items = relationship("Item", secondary="cart_item")
+    items = db.relationship("Item", secondary="cart_item")
 
     @classmethod
     def remove_cart_item(self, item_public_id):

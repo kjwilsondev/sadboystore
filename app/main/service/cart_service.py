@@ -30,6 +30,10 @@ def get_cart_items(public_id):
     user = User.query.filter_by(public_id=public_id).first()
     return user.cart.items
 
+def get_all_carts():
+    # returns carts in order of cost
+    return Cart.query.order_by(User.registered_on).all()
+
 def empty_cart(public_id):
     user = User.query.filter_by(public_id=public_id).first()
     cart = user.cart_items
