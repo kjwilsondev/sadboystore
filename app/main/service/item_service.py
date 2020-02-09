@@ -84,8 +84,10 @@ def get_item_info(name):
 # returns user carts that contain item
 def get_cart_users(item_name):
     item = Item.query.filter_by(item_name=item_name).first()
-    return item.carts
+    return item._carts
 
+# draft delete function
+# not sure how cart will handle deleted cart items
 def delete_item(item_public_id):
     item = Item.query.filter_by(public_id=item_public_id).first()
     name = item.name

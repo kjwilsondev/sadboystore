@@ -10,7 +10,6 @@ from ..service.cart_service import create_cart
 
 
 def create_user(data):
-    print("we made it")
     user = User.query.filter_by(email=data['email']).first()
     if not user:
         new_user = User(
@@ -22,8 +21,7 @@ def create_user(data):
         # create closet
         # new_user.closet = Closet()
         save_changes(new_user)
-        new_user.cart_items = create_cart(new_user.public_id)
-        # print(f"new cart {new_user.cart_items}")
+        new_user._cart = create_cart(new_user.public_id)
         return generate_token(new_user)
     else:
         response_object = {

@@ -19,11 +19,11 @@ class Cart(db.Model):
     user_id = db.Column(db.String(100), db.ForeignKey('user.public_id'), unique=True)
 
     # Item fields
-    _items = db.relationship("Item", secondary="cart_item", lazy='subquery', backref=db.backref('cart', lazy=True))
+    _items = db.relationship("CartItem", back_populates="cartitems")
 
     @classmethod
     def remove_cart_item(self, item_public_id):
-        for item in self.items:
+        for item in self._items:
             if item.public_id == item_public_id:
                 self.size -= 1
                 self.cost -= item.cost

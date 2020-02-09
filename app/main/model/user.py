@@ -33,7 +33,7 @@ class User(db.Model):
     # orders = db.relationship("Item", secondary="order")
 
     def __repr__(self):
-        return "<User '{}'>".format(self.username)
+        return "<User '{}'>".format(self.public_id)
     
     @property
     def password(self):

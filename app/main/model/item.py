@@ -26,7 +26,7 @@ class Item(db.Model):
     # picture = db.relationship("Picture", backref="item.name", lazy=True)
 
     # Store fields
-    _carts = db.relationship("Cart", secondary="cart_item")
+    _carts = db.relationship("CartItem", back_populates="itemcarts")
     # closets = db.relationship("User", secondary="closet")
     # orders = db.relationship("User", secondary="order")
     
@@ -54,13 +54,14 @@ class Item(db.Model):
     @classmethod
     def add_to_cart(self, public_id):
         user = User.query.filter_by(public_id=public_id).first()
-        user.cart.items.append(self)
-        user.cart.cost += self.cost
-        user.cart.size += 1
-        print(user.cart.items)
+        user._cart._items.append(self)
+        user._cart.cost += self.cost
+        user._cart.size += 1
+        print(user._cart._items)
         response_object = {
             'status': 'success',
             'message': 'Item added to cart',
-            'item': self.name
+            'item': self.name,
+            'cart': user.public_id
         }
         return response_object, 201

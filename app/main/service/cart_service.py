@@ -18,7 +18,6 @@ from app.main.model.cart import Cart
 
 def create_cart(public_id):
     new_cart = Cart(
-        public_id=str(uuid.uuid4()),
         user_id = public_id
     )
     db.session.add(new_cart)
@@ -27,7 +26,7 @@ def create_cart(public_id):
 
 def get_cart_items(public_id):
     user = User.query.filter_by(public_id=public_id).first()
-    return user.cart.items
+    return user._cart._items
 
 def get_all_carts():
     # returns carts in order of cost
@@ -35,14 +34,20 @@ def get_all_carts():
 
 def empty_cart(public_id):
     user = User.query.filter_by(public_id=public_id).first()
-    cart = user.cart_items
-    user.cart_items = create_cart(public_id)
-    db.session.delete(cart)
-    db.session.commit()
-    response_object = {
-        'status': 'success',
-        'message': 'Cart empty'
-    }
-    return response_object, 201
+    cart = user._cart
+    if user:
+        user._cart = create_cart(public_id)
+        db.session.delete(cart)
+        db.session.commit()
+        response_object = {
+            'status': 'success',
+            'message': 'Cart empty'
+        }
+        return response_object, 201
+    else:
+        response_object = {
+            'status': 'fail',
+            'message': 'User not found.'
+        }
 
 __all__ = ['create_cart', 'get_cart_items', 'get_all_carts', 'empty_cart']
