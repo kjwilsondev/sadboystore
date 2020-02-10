@@ -114,4 +114,4 @@ def get_cart_users(item_name):
 #         }
 #         return response_object, 409
 
-__all__ = ['create_item', 'get_items', 'get_all_items', 'get_item_info', 'get_cart_users', 'delete_item']
+__all__ = ['create_item', 'get_items', 'get_all_items', 'get_item_info', 'get_cart_users']
