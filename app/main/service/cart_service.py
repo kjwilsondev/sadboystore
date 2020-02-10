@@ -34,7 +34,6 @@ def get_all_carts():
     # return Cart.query.order_by(User.registered_on).all()
     return Cart.query.all()
 
-# Still in progress
 # def empty_cart(public_id):
 #     user = User.query.filter_by(public_id=public_id).first()
 #     cart = user._cart
