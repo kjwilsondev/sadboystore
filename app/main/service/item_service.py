@@ -10,8 +10,10 @@ from app.main.model.cart import Cart
 def create_item(data):
     name = data['name']
     piece = data['piece']
+    cost = data['cost']
     color = data['color']
     size = data['size']
+    available = data['available']
     item = Item.query.filter_by(
         name=name,
         piece=piece,
@@ -26,7 +28,7 @@ def create_item(data):
             cost=float(cost),
             color=color,
             size=size,
-            availabile=data['available']
+            available=available
         )
         db.session.add(new_item)
         db.session.commit()
@@ -34,7 +36,7 @@ def create_item(data):
             'status': 'success',
             'message': 'Successfully created item.',
             'item_name': name,
-            'available': availability
+            'available': available
         }
         return response_object, 201
     else:
