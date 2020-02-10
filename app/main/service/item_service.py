@@ -46,6 +46,11 @@ def create_item(data):
         }
         return response_object, 409
 
+# get all items by name
+def get_all_items():
+    items = Item.query.order_by(Item.release_date.desc()).all()
+    return items
+
 # get items by name
 def get_items(name):
     items = Item.query.filter_by(name=name).all()
@@ -109,4 +114,4 @@ def delete_item(item_public_id):
         }
         return response_object, 409
 
-__all__ = ['create_item', 'get_items', 'get_item_info', 'get_cart_users', 'delete_item']
+__all__ = ['create_item', 'get_items', 'get_all_items', 'get_item_info', 'get_cart_users', 'delete_item']

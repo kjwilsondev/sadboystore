@@ -15,18 +15,8 @@ from app.main.service.item_service import *
 from app.test.base import BaseTestCase
 
 
-def register_user(self):
-    return self.client.post(
-        '/user/',
-        data=json.dumps(dict(
-            email='kj1@test.com',
-            password='pass'
-        )),
-        content_type='application/json'
-    )
-
-def create_test_item():
-    new_item = create_item({
+def create_test_item_1():
+    return create_item({
         'name': 'test_item_1',
         'piece': 'shirt',
         'cost': 14.99,
@@ -34,23 +24,45 @@ def create_test_item():
         'size': 'S',
         'available': 1
     })
-    return new_item
 
 def create_test_item_2():
-    new_item = create_item({
-        'name': 'test_item_2',
+    return create_item({
+        'name': 'test_item_1',
         'piece': 'shirt',
-        'cost': 19.99,
+        'cost': 14.99,
         'color': 'black',
         'size': 'L',
         'available': 1
     })
-    return new_item
 
+def get_store_items(self):
+    return self.client.get(
+        '/item/',
+        content_type='application/json'
+    )
+
+def get_an_item_by_name(self):
+    return self.client.get(
+        '/test',
+        data=json.dumps(dict(
+            email='kj1@test.com',
+            password='pass'
+        )),
+        content_type='application/json'
+    )
 
 class TestUserCart(BaseTestCase):
-    def test_create_returns_items(self):
+    def test_get_all_items(self):
+        """ Test for get all store items """
+        with self.client:
+            response = get_store_items(self)
+            self.assertTrue(data['status'] == 'success')
+
+    def test_create_items(self):
         data = create_test_item()
+        self.assertTrue(data[0]['status'] == 'success')
+
+    def test_create_items(self):
         self.assertTrue(data[0]['status'] == 'success')
 
 
