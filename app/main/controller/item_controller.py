@@ -9,14 +9,14 @@ _item = ItemDto.item
 
 @api.route('/')
 class ItemList(Resource):
-    @api.doc('list of store items')
+    @api.doc('List of store Items')
     @api.marshal_list_with(_item, envelope='data')
     def get(self):
-        """List all registered users"""
+        """Lists all store Items"""
         return get_all_items()
 
     @api.response(201, 'Item successfully created.')
-    @api.doc('create a new item')
+    @api.doc('Create a new Item')
     @api.expect(_item, validate=True)
     def post(self):
         """Creates a new Item"""
@@ -27,10 +27,10 @@ class ItemList(Resource):
 @api.param('name', 'Item Name')
 @api.response(404, 'Item not found.')
 class ItemList(Resource):
-    @api.doc('get items by name')
+    @api.doc('Get list of Items by name')
     @api.marshal_with(_item)
     def get(self, name):
-        """get a item given its name"""
+        """Get Items by name property"""
         items = get_items(name)
         info = get_item_info(name)
         if not items:

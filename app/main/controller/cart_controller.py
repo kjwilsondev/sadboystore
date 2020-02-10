@@ -25,21 +25,21 @@ class Cart(Resource):
     @api.doc('get a cart')
     @api.marshal_with(_cart)
     def get(self, public_id):
-        """get a cart given its identifier"""
+        """Get a cart given user id"""
         items = get_cart_items(public_id)
         if not items:
             api.abort(404)
         else:
             return items
     
-    @api.doc('empty a cart')
-    @api.response(201, 'Cart empty.')
-    def delete(self, public_id):
-        """get a cart given its identifier"""
-        user = get_a_user(public_id)
-        if not user:
-            api.abort(404)
-        else:
-            return empty_cart(public_id)
+    # @api.doc('empty a cart')
+    # @api.response(201, 'Cart empty.')
+    # def delete(self, public_id):
+    #     """Empty user cart"""
+    #     user = get_a_user(public_id)
+    #     if not user:
+    #         api.abort(404)
+    #     else:
+    #         return empty_cart(public_id)
     
 

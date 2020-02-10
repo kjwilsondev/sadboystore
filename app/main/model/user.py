@@ -26,11 +26,12 @@ class User(db.Model):
     address = db.Column(db.String(100))
     city = db.Column(db.String(100))
     zip_code = db.Column(db.String(5))
-
+    
     # Store fields
     _cart = db.relationship("Cart", backref="user", uselist=False)
     # closet_items = db.relationship("Item", secondary="closet")
     # orders = db.relationship("Item", secondary="order")
+    # newsletter = db.Column(db.Boolean)
 
     def __repr__(self):
         return "<User '{}'>".format(self.public_id)

@@ -54,8 +54,9 @@ def get_a_user(public_id):
 def get_all_users():
     # returns all user in order of when they registered
     # most recent will be at the top
-    return User.query.order_by(User.registered_on).all()
-
+    # return User.query.order_by(User.registered_on).all()
+    return User.query.all()
+    
 # TEST TO SEE IF COMMENTS ARE DELETED AS WELL
 # def delete_user(public_id):
 #     user = User.query.filter_by(email=data['email']).first()
