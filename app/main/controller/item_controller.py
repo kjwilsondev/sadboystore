@@ -32,8 +32,8 @@ class ItemList(Resource):
     def get(self, name):
         """Get Items by name property"""
         items = get_items(name)
-        info = get_item_info(name)
+        # info = get_item_info(name)
         if not items:
             api.abort(404)
         else:
-            return items, info
+            return items
