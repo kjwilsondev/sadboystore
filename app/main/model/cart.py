@@ -19,8 +19,8 @@ class Cart(db.Model):
     user_id = db.Column(db.String(100), db.ForeignKey('user.public_id'), unique=True)
 
     # Item fields
-    _items = db.relationship("CartItem", back_populates="cartitems")
-    # _items = association_proxy('cart_item', 'item')
+    # _items = db.relationship("CartItem", back_populates="cartitems")
+    _items = db.relationship("Item", secondary="cart_item", viewonly=True)
 
     # @classmethod
     # def remove_cart_item(self, item_public_id):

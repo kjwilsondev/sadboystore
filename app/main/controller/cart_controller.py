@@ -20,7 +20,6 @@ class CartList(Resource):
 
 @api.route('/<public_id>/')
 @api.param('public_id', 'The User Cart identifier')
-@api.response(404, 'Cart not found.')
 class Cart(Resource):
     @api.doc('get a cart')
     @api.marshal_with(_cart)
@@ -33,14 +32,12 @@ class Cart(Resource):
             return items
     
     @api.doc('add item to cart')
-    @api.marshal_with(_cart)
-    def get(self, public_id):
+    @api.response(404, 'Cart or Item not found.')
+    def post(self, public_id):
         """Get a cart given user id"""
-        items = get_cart_items(public_id)
-        if not items:
-            api.abort(404)
-        else:
-            return items
+        # resquest should be item public_id
+        data = request.json
+        return add_to_cart(public_id=public_id, item_data=data)
     
     # @api.doc('empty a cart')
     # @api.response(201, 'Cart empty.')
@@ -52,4 +49,3 @@ class Cart(Resource):
     #     else:
     #         return empty_cart(public_id)
     
-

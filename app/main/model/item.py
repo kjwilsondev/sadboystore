@@ -26,8 +26,8 @@ class Item(db.Model):
     # picture = db.relationship("Picture", backref="item.name", lazy=True)
 
     # Store fields
-    _carts = db.relationship("CartItem", back_populates="itemcarts")
-    # _carts = association_proxy('cart_item', 'cart')
+    # _carts = db.relationship("CartItem", back_populates="itemcarts")
+    _carts = db.relationship("Cart", secondary="cart_item", viewonly=True)
     # closets = db.relationship("User", secondary="closet")
     # orders = db.relationship("User", secondary="order")
 
