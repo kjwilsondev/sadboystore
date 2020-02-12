@@ -18,7 +18,9 @@ class CartItem(db.Model):
     # Cart fields
     cart_id = db.Column(db.String(100), db.ForeignKey('cart.user_id'), primary_key=True)
     cartitems = db.relationship("Cart", back_populates="_items")
+    # cartitems = db.relationship("Cart", back_populates="_items", cascade="all, delete-orphan")
 
     # Item fields
     item_id = db.Column(db.String(100), db.ForeignKey('item.public_id'), primary_key=True, unique=True)
     itemcarts = db.relationship("Item", back_populates="_carts")
+    # itemcarts = db.relationship("Item", back_populates="_carts", cascade="all, delete-orphan")

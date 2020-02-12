@@ -1,8 +1,8 @@
 from .. import db, flask_bcrypt
+
 import datetime
 from ..config import key
 
-from ..model.user import User
 
 class Item(db.Model):
     """
@@ -27,6 +27,7 @@ class Item(db.Model):
 
     # Store fields
     _carts = db.relationship("CartItem", back_populates="itemcarts")
+    # _carts = association_proxy('cart_item', 'cart')
     # closets = db.relationship("User", secondary="closet")
     # orders = db.relationship("User", secondary="order")
 
@@ -54,17 +55,17 @@ class Item(db.Model):
         }
         return response_object, 201
 
-    @classmethod
-    def add_to_cart(self, public_id):
-        user = User.query.filter_by(public_id=public_id).first()
-        user._cart._items.append(self)
-        user._cart.cost += self.cost
-        user._cart.size += 1
-        print(user._cart._items)
-        response_object = {
-            'status': 'success',
-            'message': 'Item added to cart',
-            'item': self.name,
-            'cart': user.public_id
-        }
-        return response_object, 201
+    # @classmethod
+    # def add_to_cart(self, public_id):
+    #     user = User.query.filter_by(public_id=public_id).first()
+    #     user._cart._items.append(self)
+    #     user._cart.cost += self.cost
+    #     user._cart.size += 1
+    #     print(user._cart._items)
+    #     response_object = {
+    #         'status': 'success',
+    #         'message': 'Item added to cart',
+    #         'item': self.name,
+    #         'cart': user.public_id
+    #     }
+    #     return response_object, 201
