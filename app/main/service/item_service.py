@@ -22,6 +22,7 @@ def create_item(data):
     ).first()
     if not item:
         new_item = Item(
+            public_id=str(uuid.uuid4()),
             release_date=datetime.datetime.utcnow(),
             name=name,
             piece=piece,
@@ -36,7 +37,7 @@ def create_item(data):
             'status': 'success',
             'message': 'Successfully created item.',
             'item_name': name,
-            'available': available
+            'public_id': new_item.public_id
         }
         return response_object, 201
     else:

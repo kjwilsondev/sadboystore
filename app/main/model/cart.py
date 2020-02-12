@@ -1,4 +1,5 @@
 from .. import db, flask_bcrypt
+from sqlalchemy.ext.associationproxy import association_proxy
 from ..config import key
 
 from ..model.user import User
@@ -20,7 +21,12 @@ class Cart(db.Model):
 
     # Item fields
     # _items = db.relationship("CartItem", back_populates="cartitems")
-    _items = db.relationship("Item", secondary="cart_item", viewonly=True)
+    # _items = db.relationship("Item", secondary="cart_item", viewonly=True)
+    _items = db.relationship('CartItem', cascade='all, delete-orphan')
+    cart_items = association_proxy('_items', 'item', creator=lambda item: CartItem(item=item))
+
+    def __repr__(self):
+        return "<Cart '{}'>".format(self.user_id)
 
     # @classmethod
     # def remove_cart_item(self, item_public_id):

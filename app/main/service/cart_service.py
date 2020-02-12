@@ -4,6 +4,8 @@ import datetime
 from app.main import db
 from app.main.model.user import User
 from app.main.model.cart import Cart
+from app.main.model.item import Item
+from app.main.model.cart_item import CartItem
 
 # TODO:
 # Calculate cost of cart
@@ -16,16 +18,16 @@ from app.main.model.cart import Cart
 
 def create_cart(public_id):
     new_cart = Cart(
-        user_id = public_id
+        user_id=public_id
     )
     db.session.add(new_cart)
     db.session.commit()
     return new_cart
 
 def get_cart_items(public_id):
-    cart = Cart.query.filter_by(user_id=public_id).first()
-    # return user._cart._items
-    return cart._items
+    # cart = Cart.query.filter_by(user_id=public_id).first()
+    items = CartItem.query.filter_by(cart_id=public_id).all()
+    return items
 
 def get_all_carts():
     # returns carts in order of cost
@@ -33,11 +35,23 @@ def get_all_carts():
     return Cart.query.all()
 
 def add_to_cart(public_id, item_data):
-    cart = Cart.query.filter_by(public_id=public_id).first()
-    item = Item.query.filter_by(public_id=item_data['item_id']).first()
-
-    if cart and item:
-        cart._items.append(item)
+    print('started')
+    user = User.query.filter_by(public_id=public_id).first()
+    item = Item.query.filter_by(public_id=item_data['public_id']).first()
+    quantity = item_data['quantity']
+    if user:
+        print("user found")
+    if item:
+        print("item found")
+    if user and item:
+        user._cart._items.append(CartItem(
+            cart_id=public_id,
+            item_id=item.public_id,
+            quantity=quantity
+        ))
+        print(user)
+        print(user._cart)
+        print(user._cart._items)
         db.session.commit()
         response_object = {
             'status': 'success',

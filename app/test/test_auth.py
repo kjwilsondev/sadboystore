@@ -2,6 +2,7 @@ import unittest
 
 from app.main import db
 from app.main.model.blacklist import BlacklistToken
+from app.main.model.cart_item import CartItem
 import json
 from app.test.base import BaseTestCase
 

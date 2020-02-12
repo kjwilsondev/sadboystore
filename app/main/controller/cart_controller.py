@@ -1,14 +1,14 @@
 from flask import request
 from flask_restplus import Resource
 
-from ..util.dto import CartDto
-from ..util.dto import UserDto
+from ..util.dto import CartDto, UserDto, ItemDto
 from ..service.user_service import get_a_user
 from ..service.cart_service import *
 
 api = CartDto.api
 _cart = CartDto.cart
 _user = UserDto.user
+_item = ItemDto.item
 
 @api.route('/')
 class CartList(Resource):
@@ -22,7 +22,7 @@ class CartList(Resource):
 @api.param('public_id', 'The User Cart identifier')
 class Cart(Resource):
     @api.doc('get a cart')
-    @api.marshal_with(_cart)
+    # @api.marshal_with(_cart)
     def get(self, public_id):
         """Get a cart given user id"""
         items = get_cart_items(public_id)
@@ -33,10 +33,13 @@ class Cart(Resource):
     
     @api.doc('add item to cart')
     @api.response(404, 'Cart or Item not found.')
+    @api.expect(_item)
     def post(self, public_id):
-        """Get a cart given user id"""
+        """Add item to cart given user id"""
         # resquest should be item public_id
+        print("retrieving")
         data = request.json
+        print(data)
         return add_to_cart(public_id=public_id, item_data=data)
     
     # @api.doc('empty a cart')

@@ -28,6 +28,14 @@ class CartDto:
         'cost': fields.Float(required=True, description='cart cost')
     })
 
+# class CartItemDto:
+#     api = Namespace('cart_item', description='cart item operations')
+#     cartitem = api.model('cart_item', {
+#         'cart_id': fields.String(required=True, description='cart user id'),
+#         'item_id': fields.Float(required=True, description='item public id'),
+#         'quantity': fields.Integer(required=True, description='item quantity')
+#     })
+
 class ItemDto:
     api = Namespace('item', description='item operations')
     item = api.model('item', {
@@ -38,4 +46,5 @@ class ItemDto:
         'color': fields.String(required=True, description='item color'),
         'size': fields.String(required=True, description='item size'),
         'available': fields.Integer(required=True, description='item available'),
+        'quantity': fields.Integer(required=False, description='item quantity')
     })

@@ -12,6 +12,7 @@ from app.main.model import user
 from app.main.model import blacklist
 from app.main.model import cart
 from app.main.model import item
+from app.main.model import cart_item
 # from app.main.model import closet
 # from app.main.model import order
 

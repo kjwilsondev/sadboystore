@@ -1,4 +1,5 @@
 from .. import db, flask_bcrypt
+from sqlalchemy.ext.associationproxy import association_proxy
 
 import datetime
 from ..config import key
@@ -27,7 +28,9 @@ class Item(db.Model):
 
     # Store fields
     # _carts = db.relationship("CartItem", back_populates="itemcarts")
-    _carts = db.relationship("Cart", secondary="cart_item", viewonly=True)
+    # _carts = db.relationship("Cart", secondary="cart_item", viewonly=True)
+    # _carts = association_proxy('cart_item', 'cart')
+
     # closets = db.relationship("User", secondary="closet")
     # orders = db.relationship("User", secondary="order")
 

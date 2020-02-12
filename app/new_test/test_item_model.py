@@ -56,7 +56,7 @@ class TestUserCart(BaseTestCase):
         self.assertTrue(data[0]['status'] == 'success')
         with self.client:
             response = get_store_items(self)
-            print(response)
+            # print(response)
             self.assertTrue(response.content_type == 'application/json')
             self.assertEqual(response.status_code, 200)
 

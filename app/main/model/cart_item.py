@@ -1,4 +1,5 @@
 from .. import db, flask_bcrypt
+from sqlalchemy.ext.associationproxy import association_proxy
 from ..config import key
 
 from ..model.item import Item
@@ -16,11 +17,15 @@ class CartItem(db.Model):
     quantity = db.Column(db.Integer, default=1)
 
     # Cart fields
-    cart_id = db.Column(db.String(100), db.ForeignKey('cart.user_id'), primary_key=True)
-    # cartitems = db.relationship("Cart", back_populates="_items")
-    cartitems = db.relationship("Cart", back_populates="_items", cascade="all, delete-orphan")
+    cart_id = db.Column(db.String(100), db.ForeignKey('cart.user_id'), primary_key=True, nullable=False)
+    # cartitems = db.relationship("Cart", backref=db.backref("_items"))
+    # cartitems = db.relationship("Cart", back_populates="_items", single_parent=True, cascade="all, delete-orphan")
 
     # Item fields
-    item_id = db.Column(db.String(100), db.ForeignKey('item.public_id'), primary_key=True, unique=True)
-    # itemcarts = db.relationship("Item", back_populates="_carts")
-    itemcarts = db.relationship("Item", back_populates="_carts", cascade="all, delete-orphan")
+    item_id = db.Column(db.String(100), db.ForeignKey('item.public_id'), primary_key=True)
+    item = db.relationship('Item')
+    # itemcarts = db.relationship("Item", backref=db.backref("_carts"))
+    # itemcarts = db.relationship("Item", back_populates="_carts", cascade="all, delete-orphan")
+
+    def __repr__(self):
+        return "<CartItem '{}', {}>".format(self.item_id, self.quantity)
