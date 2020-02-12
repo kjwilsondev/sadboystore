@@ -10,14 +10,15 @@ class AuthDto:
 class UserDto:
     api = Namespace('user', description='user operations')
     user = api.model('user', {
+        'public_id': fields.String(required=False, description='user id'),
         'email': fields.String(required=True, description='email address'),
-        'password': fields.String(required=True, description='password'),
-        'fname': fields.String(required=False, description='first name'),
-        'lname': fields.String(required=False, description='last name'),
-        'phone': fields.String(required=False, description='phone number'),
-        'address': fields.String(required=False, description='user address'),
-        'city': fields.String(required=False, description='city'),
-        'zip_code': fields.Integer(required=False, description='zip code')
+        'password': fields.String(required=True, description='password')
+        # 'fname': fields.String(required=False, description='first name'),
+        # 'lname': fields.String(required=False, description='last name'),
+        # 'phone': fields.String(required=False, description='phone number'),
+        # 'address': fields.String(required=False, description='user address'),
+        # 'city': fields.String(required=False, description='city'),
+        # 'zip_code': fields.Integer(required=False, description='zip code')
     })
 
 class CartDto:
@@ -30,6 +31,7 @@ class CartDto:
 class ItemDto:
     api = Namespace('item', description='item operations')
     item = api.model('item', {
+        'public_id': fields.String(required=True, description='item name'),
         'name': fields.String(required=True, description='item name'),
         'piece': fields.String(required=True, description='item piece'),
         'cost': fields.Float(required=True, description='item cost'),

@@ -11,11 +11,11 @@ class CartItem(db.Model):
     """
     __tablename__ = "cart_item"
 
-    # Cart fields
+    # Cart Item fields
     id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     quantity = db.Column(db.Integer, default=1)
 
-    # User fields
+    # Cart fields
     cart_id = db.Column(db.String(100), db.ForeignKey('cart.user_id'), primary_key=True)
     cartitems = db.relationship("Cart", back_populates="_items")
 

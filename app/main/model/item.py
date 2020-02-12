@@ -29,7 +29,10 @@ class Item(db.Model):
     _carts = db.relationship("CartItem", back_populates="itemcarts")
     # closets = db.relationship("User", secondary="closet")
     # orders = db.relationship("User", secondary="order")
-    
+
+    def __repr__(self):
+        return "<Item '{}'>".format(self.public_id)
+
     @classmethod
     def update_cost(self, cost):
         old_cost, self.cost = self.cost, cost

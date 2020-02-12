@@ -32,6 +32,16 @@ class Cart(Resource):
         else:
             return items
     
+    @api.doc('add item to cart')
+    @api.marshal_with(_cart)
+    def get(self, public_id):
+        """Get a cart given user id"""
+        items = get_cart_items(public_id)
+        if not items:
+            api.abort(404)
+        else:
+            return items
+    
     # @api.doc('empty a cart')
     # @api.response(201, 'Cart empty.')
     # def delete(self, public_id):

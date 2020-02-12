@@ -6,8 +6,6 @@ from app.main.model.user import User
 from app.main.model.cart import Cart
 
 # TODO:
-# Edit cart_service methods to match new class
-# Add to Cart
 # Calculate cost of cart
 # response object for 
 # {

@@ -32,6 +32,7 @@ class User(db.Model):
     # closet_items = db.relationship("Item", secondary="closet")
     # orders = db.relationship("Item", secondary="order")
     # newsletter = db.Column(db.Boolean)
+    # money_spent = db.Column(db.Float)
 
     def __repr__(self):
         return "<User '{}'>".format(self.public_id)

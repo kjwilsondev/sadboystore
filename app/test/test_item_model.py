@@ -50,6 +50,7 @@ def get_an_item_by_name(self):
         )),
         content_type='application/json'
     )
+    
 
 class TestUserCart(BaseTestCase):
     def test_get_all_items(self):
@@ -60,38 +61,5 @@ class TestUserCart(BaseTestCase):
         self.assertTrue(data[0]['status'] == 'success')
         with self.client:
             response = get_store_items(self)
-            print(response)
-            # self.assertTrue(data['status'] == 'success')
-
-    # def test_create_items(self):
-    #     data = create_test_item()
-    #     self.assertTrue(data[0]['status'] == 'success')
-
-    # def test_create_items(self):
-    #     self.assertTrue(data[0]['status'] == 'success')
-
-
-
-# class TestAuthBlueprint(BaseTestCase):
-#     def test_registration(self):
-#         """ Test for user registration """
-#         with self.client:
-#             response = register_user(self)
-#             data = json.loads(response.data.decode())
-#             self.assertTrue(data['status'] == 'success')
-#             self.assertTrue(data['message'] == 'Successfully registered.')
-#             self.assertTrue(data['Authorization'])
-#             self.assertTrue(response.content_type == 'application/json')
-#             self.assertEqual(response.status_code, 201)
-
-#     def test_registered_with_already_registered_user(self):
-#         """ Test registration with already registered email"""
-#         register_user(self)
-#         with self.client:
-#             response = register_user(self)
-#             data = json.loads(response.data.decode())
-#             self.assertTrue(data['status'] == 'fail')
-#             self.assertTrue(
-#                 data['message'] == 'User already exists. Please Log in.')
-#             self.assertTrue(response.content_type == 'application/json')
-#             self.assertEqual(response.status_code, 409)
+            self.assertTrue(response.content_type == 'application/json')
+            self.assertEqual(response.status_code, 200)
