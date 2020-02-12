@@ -31,7 +31,7 @@ class CartDto:
 class ItemDto:
     api = Namespace('item', description='item operations')
     item = api.model('item', {
-        'public_id': fields.String(required=True, description='item name'),
+        'public_id': fields.String(required=False, description='item name'),
         'name': fields.String(required=True, description='item name'),
         'piece': fields.String(required=True, description='item piece'),
         'cost': fields.Float(required=True, description='item cost'),

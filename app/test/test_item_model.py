@@ -41,16 +41,11 @@ def get_store_items(self):
         content_type='application/json'
     )
 
-def get_an_item_by_name(self):
+def get_items_by_name(self):
     return self.client.get(
-        '/test',
-        data=json.dumps(dict(
-            email='kj1@test.com',
-            password='pass'
-        )),
+        '/item/test_item_1/',
         content_type='application/json'
     )
-    
 
 class TestUserCart(BaseTestCase):
     def test_get_all_items(self):
@@ -61,5 +56,18 @@ class TestUserCart(BaseTestCase):
         self.assertTrue(data[0]['status'] == 'success')
         with self.client:
             response = get_store_items(self)
+            print(response)
             self.assertTrue(response.content_type == 'application/json')
             self.assertEqual(response.status_code, 200)
+
+    def test_get_items_by_name(self):
+        """ Test for get all store items """
+        data = create_test_item_1()
+        self.assertTrue(data[0]['status'] == 'success')
+        data = create_test_item_2()
+        self.assertTrue(data[0]['status'] == 'success')
+        with self.client:
+            response = get_items_by_name(self)
+            self.assertTrue(response.content_type == 'application/json')
+            self.assertEqual(response.status_code, 200)
+            
