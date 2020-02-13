@@ -45,22 +45,26 @@ def add_to_cart(public_id, item_data):
     if not item:
         message = "Item not found"
     if user and item:
-        user._cart.size += 1
-        user._cart._items.append(CartItem(
-            cart_id=public_id,
-            item_id=item.public_id,
-            cost=item.cost,
-            quantity=quantity
-        ))
-        db.session.commit()
-        response_object = {
-            'status': 'success',
-            'message': 'Added item to cart',
-            '_cart.cost': user._cart.cost,
-            '_cart.size': user._cart.size
-        }
-        return response_object, 201
-
+        try:
+            user._cart.size += 1
+            user._cart._items.append(CartItem(
+                cart_id=public_id,
+                item_id=item.public_id,
+                cost=item.cost,
+                quantity=quantity
+            ))
+            db.session.commit()
+        except:
+            db.session.rollback()
+            raise
+        else:
+            response_object = {
+                'status': 'success',
+                'message': 'Added item to cart',
+                '_cart.cost': user._cart.cost,
+                '_cart.size': user._cart.size
+            }
+            return response_object, 201
     response_object = {
         'status': 'fail',
         'message': message
@@ -70,15 +74,20 @@ def add_to_cart(public_id, item_data):
 def empty_cart(public_id):
     items = CartItem.query.filter_by(cart_id=public_id).all()
     if items:
-        for item in items:
-            print(item)
-            db.session.delete(item)
-        db.session.commit()
-        response_object = {
-            'status': 'success',
-            'message': 'Cart empty'
-        }
-        return response_object, 201
+        try:
+            for item in items:
+                print(item)
+                db.session.delete(item)
+        except:
+            db.session.rollback()
+            raise
+        else:
+            db.session.commit()
+            response_object = {
+                'status': 'success',
+                'message': 'Cart empty'
+            }
+            return response_object, 201
     else:
         response_object = {
             'status': 'fail',

@@ -21,25 +21,30 @@ def create_item(data):
         size=size
     ).first()
     if not item:
-        new_item = Item(
-            public_id=str(uuid.uuid4()),
-            release_date=datetime.datetime.utcnow(),
-            name=name,
-            piece=piece,
-            cost=float(cost),
-            color=color,
-            size=size,
-            available=available
-        )
-        db.session.add(new_item)
-        db.session.commit()
-        response_object = {
-            'status': 'success',
-            'message': 'Successfully created item.',
-            'item_name': name,
-            'public_id': new_item.public_id
-        }
-        return response_object, 201
+        try:
+            new_item = Item(
+                public_id=str(uuid.uuid4()),
+                release_date=datetime.datetime.utcnow(),
+                name=name,
+                piece=piece,
+                cost=float(cost),
+                color=color,
+                size=size,
+                available=available
+            )
+            db.session.add(new_item)
+        except:
+            db.session.rollback()
+            raise
+        else:
+            db.session.commit()
+            response_object = {
+                'status': 'success',
+                'message': 'Successfully created item.',
+                'item_name': name,
+                'public_id': new_item.public_id
+            }
+            return response_object, 201
     else:
         response_object = {
             'status': 'fail',
