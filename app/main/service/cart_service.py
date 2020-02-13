@@ -67,23 +67,22 @@ def add_to_cart(public_id, item_data):
     }
     return response_object, 404
 
+def empty_cart(public_id):
+    items = CartItem.query.filter_by(cart_id=public_id).all()
+    if items:
+        for item in items:
+            print(item)
+            db.session.delete(item)
+        db.session.commit()
+        response_object = {
+            'status': 'success',
+            'message': 'Cart empty'
+        }
+        return response_object, 201
+    else:
+        response_object = {
+            'status': 'fail',
+            'message': 'No items found.'
+        }
 
-# def empty_cart(public_id):
-#     user = User.query.filter_by(public_id=public_id).first()
-#     cart = user._cart
-#     if user:
-#         db.session.delete(cart)
-#         user._cart = create_cart(public_id)
-#         db.session.commit()
-#         response_object = {
-#             'status': 'success',
-#             'message': 'Cart empty'
-#         }
-#         return response_object, 201
-#     else:
-#         response_object = {
-#             'status': 'fail',
-#             'message': 'User not found.'
-#         }
-
-__all__ = ['create_cart', 'get_cart_items', 'get_all_carts', 'add_to_cart']
+__all__ = ['create_cart', 'get_cart_items', 'get_all_carts', 'add_to_cart', 'empty_cart']
