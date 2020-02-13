@@ -7,6 +7,8 @@ class AuthDto:
         'password': fields.String(required=True, description='user password ')
     })
 
+# TODO:
+# Create Full User Dto for full info
 class UserDto:
     api = Namespace('user', description='user operations')
     user = api.model('user', {
@@ -25,16 +27,18 @@ class CartDto:
     api = Namespace('cart', description='cart operations')
     cart = api.model('cart', {
         'user_id': fields.String(required=True, description='cart user id'),
-        'cost': fields.Float(required=True, description='cart cost')
+        'size': fields.Float(required=False, description='cart size'),
+        'cost': fields.Float(required=False, description='cart cost')
     })
 
-# class CartItemDto:
-#     api = Namespace('cart_item', description='cart item operations')
-#     cartitem = api.model('cart_item', {
-#         'cart_id': fields.String(required=True, description='cart user id'),
-#         'item_id': fields.Float(required=True, description='item public id'),
-#         'quantity': fields.Integer(required=True, description='item quantity')
-#     })
+class CartItemDto:
+    api = Namespace('cart_item', description='cart item operations')
+    cartitem = api.model('cart_item', {
+        # 'cart_id': fields.String(required=True, description='cart user id'),
+        'item_id': fields.String(required=True, description='item public id'),
+        'cost': fields.Float(required=False, description='item cost'),
+        'quantity': fields.Integer(required=True, description='item quantity')
+    })
 
 class ItemDto:
     api = Namespace('item', description='item operations')
@@ -45,6 +49,5 @@ class ItemDto:
         'cost': fields.Float(required=True, description='item cost'),
         'color': fields.String(required=True, description='item color'),
         'size': fields.String(required=True, description='item size'),
-        'available': fields.Integer(required=True, description='item available'),
-        'quantity': fields.Integer(required=False, description='item quantity')
+        'available': fields.Integer(required=True, description='item available')
     })

@@ -35,7 +35,7 @@ class Item(db.Model):
     # orders = db.relationship("User", secondary="order")
 
     def __repr__(self):
-        return "<Item '{}'>".format(self.public_id)
+        return "<Item '{}', '{}'>".format(self.public_id, self.cost)
 
     @classmethod
     def update_cost(self, cost):
@@ -57,18 +57,3 @@ class Item(db.Model):
             'available': self.available
         }
         return response_object, 201
-
-    # @classmethod
-    # def add_to_cart(self, public_id):
-    #     user = User.query.filter_by(public_id=public_id).first()
-    #     user._cart._items.append(self)
-    #     user._cart.cost += self.cost
-    #     user._cart.size += 1
-    #     print(user._cart._items)
-    #     response_object = {
-    #         'status': 'success',
-    #         'message': 'Item added to cart',
-    #         'item': self.name,
-    #         'cart': user.public_id
-    #     }
-    #     return response_object, 201

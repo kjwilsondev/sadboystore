@@ -28,7 +28,7 @@ class ItemList(Resource):
 @api.response(404, 'Item not found.')
 class ItemList(Resource):
     @api.doc('Get list of Items by name')
-    @api.marshal_with(_item)
+    @api.marshal_with(_item, envelope='data')
     def get(self, name):
         """Get Items by name property"""
         items = get_items(name)

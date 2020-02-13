@@ -57,42 +57,42 @@ def get_items(name):
     items = Item.query.filter_by(name=name).all()
     return items
 
-def get_item_info(name):
-    items = Item.query.filter_by(name=name).all()
-    cost = items[0].cost
-    colors = {} # histgram (key: color, value: available)
-    sizes = {} # histgram (key: size, value: available)
+# def get_item_info(name):
+#     items = Item.query.filter_by(name=name).all()
+#     cost = items[0].cost
+#     colors = {} # histgram (key: color, value: available)
+#     sizes = {} # histgram (key: size, value: available)
 
-    if items:
-        for item in items:
-            if item.color in colors:
-                colors[item.color] += 1
-            else:
-                colors[item.color] = 1
-            if item.size in sizes:
-                sizes[item.size] += 1
-            else:
-                sizes[item.size] = 1
+#     if items:
+#         for item in items:
+#             if item.color in colors:
+#                 colors[item.color] += 1
+#             else:
+#                 colors[item.color] = 1
+#             if item.size in sizes:
+#                 sizes[item.size] += 1
+#             else:
+#                 sizes[item.size] = 1
 
-        response_object = {
-            'status': 'success',
-            'message': 'Items located',
-            'cost': cost,
-            'colors': colors,
-            'sizes': sizes
-        }
-        return response_object, 201
-    else:
-        response_object = {
-            'status': 'fail',
-            'message': 'Item not found.',
-        }
-        return response_object, 409
+#         response_object = {
+#             'status': 'success',
+#             'message': 'Items located',
+#             'cost': cost,
+#             'colors': colors,
+#             'sizes': sizes
+#         }
+#         return response_object, 201
+#     else:
+#         response_object = {
+#             'status': 'fail',
+#             'message': 'Item not found.',
+#         }
+#         return response_object, 409
 
 # returns user carts that contain item
-def get_cart_users(item_name):
-    item = Item.query.filter_by(name=item_name).first()
-    return item._carts
+# def get_cart_users(item_name):
+#     item = Item.query.filter_by(name=item_name).first()
+#     return item._carts
 
 # draft delete function
 # not sure how cart will handle deleted cart items
@@ -115,4 +115,4 @@ def get_cart_users(item_name):
 #         }
 #         return response_object, 409
 
-__all__ = ['create_item', 'get_items', 'get_all_items', 'get_item_info', 'get_cart_users']
+__all__ = ['create_item', 'get_items', 'get_all_items']

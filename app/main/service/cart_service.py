@@ -27,6 +27,7 @@ def create_cart(public_id):
 def get_cart_items(public_id):
     # cart = Cart.query.filter_by(user_id=public_id).first()
     items = CartItem.query.filter_by(cart_id=public_id).all()
+    print(items)
     return items
 
 def get_all_carts():
@@ -35,31 +36,36 @@ def get_all_carts():
     return Cart.query.all()
 
 def add_to_cart(public_id, item_data):
-    print('started')
     user = User.query.filter_by(public_id=public_id).first()
-    item = Item.query.filter_by(public_id=item_data['public_id']).first()
+    item = Item.query.filter_by(public_id=item_data['item_id']).first()
+    print(item)
     quantity = item_data['quantity']
-    if user:
-        print("user found")
-    if item:
-        print("item found")
+    if not user:
+        message = "User not found"
+    if not item:
+        message = "Item not found"
     if user and item:
+        user._cart.size += 1
         user._cart._items.append(CartItem(
             cart_id=public_id,
             item_id=item.public_id,
+            cost=item.cost,
             quantity=quantity
         ))
-        print(user)
-        print(user._cart)
-        print(user._cart._items)
         db.session.commit()
         response_object = {
             'status': 'success',
             'message': 'Added item to cart',
+            '_cart.cost': user._cart.cost,
+            '_cart.size': user._cart.size
         }
         return response_object, 201
 
-    return 404
+    response_object = {
+        'status': 'fail',
+        'message': message
+    }
+    return response_object, 404
 
 
 # def empty_cart(public_id):

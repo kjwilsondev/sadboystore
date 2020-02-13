@@ -17,30 +17,6 @@ class CartList(Resource):
     def get(self):
         """List all carts"""
         return get_all_carts()
-
-@api.route('/<public_id>/')
-@api.param('public_id', 'The User Cart identifier')
-class Cart(Resource):
-    @api.doc('get a cart')
-    # @api.marshal_with(_cart)
-    def get(self, public_id):
-        """Get a cart given user id"""
-        items = get_cart_items(public_id)
-        if not items:
-            api.abort(404)
-        else:
-            return items
-    
-    @api.doc('add item to cart')
-    @api.response(404, 'Cart or Item not found.')
-    @api.expect(_item)
-    def post(self, public_id):
-        """Add item to cart given user id"""
-        # resquest should be item public_id
-        print("retrieving")
-        data = request.json
-        print(data)
-        return add_to_cart(public_id=public_id, item_data=data)
     
     # @api.doc('empty a cart')
     # @api.response(201, 'Cart empty.')

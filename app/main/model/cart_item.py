@@ -1,6 +1,7 @@
 from .. import db, flask_bcrypt
 from sqlalchemy.ext.associationproxy import association_proxy
 from ..config import key
+import json
 
 from ..model.item import Item
 
@@ -14,6 +15,7 @@ class CartItem(db.Model):
 
     # Cart Item fields
     id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    cost = db.Column(db.Float)
     quantity = db.Column(db.Integer, default=1)
 
     # Cart fields

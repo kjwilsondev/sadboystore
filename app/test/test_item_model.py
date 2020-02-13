@@ -70,4 +70,6 @@ class TestUserCart(BaseTestCase):
             response = get_items_by_name(self)
             self.assertTrue(response.content_type == 'application/json')
             self.assertEqual(response.status_code, 200)
+            response_data = json.loads(response.data)
+            # print(len(response_data))
             
