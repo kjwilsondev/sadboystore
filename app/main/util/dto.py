@@ -44,7 +44,7 @@ class ItemDto:
     item = api.model('item', {
         'public_id': fields.String(required=False, description='item name'),
         'name': fields.String(required=True, description='item name'),
-        'piece': fields.String(required=True, description='item piece'),
+        'category': fields.String(required=True, description='item category'),
         'cost': fields.Float(required=True, description='item cost'),
         'color': fields.String(required=True, description='item color'),
         'size': fields.String(required=True, description='item size'),

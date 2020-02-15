@@ -18,7 +18,7 @@ from app.test.base import BaseTestCase
 def create_test_item_1():
     return create_item({
         'name': 'test_item_1',
-        'piece': 'shirt',
+        'category': 'shirt',
         'cost': 14.99,
         'color': 'black',
         'size': 'S',
@@ -28,7 +28,7 @@ def create_test_item_1():
 def create_test_item_2():
     return create_item({
         'name': 'test_item_1',
-        'piece': 'shirt',
+        'category': 'shirt',
         'cost': 14.99,
         'color': 'black',
         'size': 'L',
@@ -43,7 +43,7 @@ def get_store_items(self):
 
 def get_items_by_name(self):
     return self.client.get(
-        '/item/test_item_1/',
+        '/item/name/test_item_1/',
         content_type='application/json'
     )
 
@@ -68,6 +68,7 @@ class TestUserCart(BaseTestCase):
         self.assertTrue(data[0]['status'] == 'success')
         with self.client:
             response = get_items_by_name(self)
+            print(response)
             self.assertTrue(response.content_type == 'application/json')
             self.assertEqual(response.status_code, 200)
             response_data = json.loads(response.data)

@@ -10,14 +10,14 @@ from app.main.model.cart_item import CartItem
 
 def create_item(data):
     name = data['name']
-    piece = data['piece']
+    category = data['category']
     cost = data['cost']
     color = data['color']
     size = data['size']
     available = data['available']
     item = Item.query.filter_by(
         name=name,
-        piece=piece,
+        category=category,
         color=color,
         size=size
     ).first()
@@ -27,7 +27,7 @@ def create_item(data):
                 public_id=str(uuid.uuid4()),
                 release_date=datetime.datetime.utcnow(),
                 name=name,
-                piece=piece,
+                category=category,
                 cost=float(cost),
                 color=color,
                 size=size,

@@ -27,7 +27,7 @@ def register_user(self):
 def create_test_item_1():
     return create_item({
         'name': 'test_item_1',
-        'piece': 'shirt',
+        'category': 'shirt',
         'cost': 14.99,
         'color': 'black',
         'size': 'S',
@@ -37,7 +37,7 @@ def create_test_item_1():
 def create_test_item_2():
     return create_item({
         'name': 'test_item_1',
-        'piece': 'shirt',
+        'category': 'shirt',
         'cost': 14.99,
         'color': 'black',
         'size': 'L',
