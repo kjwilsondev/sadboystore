@@ -30,5 +30,7 @@ class CartItem(db.Model):
     # itemcarts = db.relationship("Item", backref=db.backref("_carts"))
     # itemcarts = db.relationship("Item", back_populates="_carts", cascade="all, delete-orphan")
 
-    def __repr__(self):
+    def __str__(self):
         return "<CartItem '{}', {}>".format(self.item_id, self.quantity)
+
+    #TODO: Make a __repr__

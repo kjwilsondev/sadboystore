@@ -35,8 +35,10 @@ class Item(db.Model):
     # closets = db.relationship("User", secondary="closet")
     # orders = db.relationship("User", secondary="order")
 
-    def __repr__(self):
+    def __str__(self):
         return "<Item '{}', '{}'>".format(self.public_id, self.cost)
+
+    #TODO: Make a __repr__
 
     @classmethod
     def update_cost(self, cost):

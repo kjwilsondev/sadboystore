@@ -34,8 +34,10 @@ class User(db.Model):
     # newsletter = db.Column(db.Boolean)
     # money_spent = db.Column(db.Float)
 
-    def __repr__(self):
+    def __str__(self):
         return "<User '{}'>".format(self.public_id)
+
+    #TODO: Make a __repr__
     
     @property
     def password(self):

@@ -17,14 +17,12 @@ def create_cart(public_id):
     return new_cart
 
 def get_cart_items(public_id):
-    # cart = Cart.query.filter_by(user_id=public_id).first()
     items = CartItem.query.filter_by(cart_id=public_id).all()
-    print(items)
     return items
 
 def get_all_carts():
     # returns carts in order of cost
-    # return Cart.query.order_by(User.registered_on).all()
+    # return Cart.query.order_by(Cart.cost).all()
     return Cart.query.all()
 
 def add_to_cart(public_id, item_data):
@@ -43,12 +41,18 @@ def add_to_cart(public_id, item_data):
         # check if item already in cart
         cart_item = CartItem.query.filter_by(
             cart_id=public_id, 
-            item_item=item_data['item_id']
-        )
+            item_id=item_data['item_id']
+        ).first()
         if cart_item:
-            # need to write update cart cost function
-            user._cart.cost += cart_item.cost * quantity
-            cart_item.quantity += quantity
+            try:
+                cart_item.quantity += quantity
+                # need to write update cart cost function
+                user._cart.cost += cart_item.cost * quantity
+                user._cart.size += quantity
+                db.session.commit()
+            except:
+                db.session.rollback()
+                raise
         # if no item create item
         else:
             try:
@@ -120,6 +124,7 @@ def empty_cart(public_id):
     user = User.query.filter_by(public_id=public_id).first()
     items = CartItem.query.filter_by(cart_id=public_id).all()
     if items:
+        print(here)
         try:
             for item in items:
                 # print(item)
@@ -142,5 +147,8 @@ def empty_cart(public_id):
             'status': 'fail',
             'message': 'No items found.'
         }
+        print(user._cart)
+        print(user._cart.cost)
+        return response_object, 201
 
 __all__ = ['create_cart', 'get_cart_items', 'get_all_carts', 'add_to_cart', 'remove_cart_item', 'empty_cart']

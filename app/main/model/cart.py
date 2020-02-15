@@ -25,8 +25,10 @@ class Cart(db.Model):
     _items = db.relationship('CartItem', cascade='all, delete-orphan')
     cart_items = association_proxy('_items', 'item', creator=lambda item: CartItem(item=item))
 
-    def __repr__(self):
+    def __str__(self):
         return "<Cart '{}'>".format(self.user_id)
+
+    #TODO: Make a __repr__
 
     # @classmethod
     # def remove_cart_item(self, item_public_id):
