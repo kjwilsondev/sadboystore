@@ -77,6 +77,9 @@ def delete_item(item_public_id):
             try:
                 # delete all cart items
                 for cart_item in cart_items:
+                    cart = Cart.query.filter_by(user_id=cart_item.cart_id)
+                    cart.cost -= cart_item.cost
+                    cart.size -= cart_item.quantity
                     db.session.delete(cart_item)
                 db.session.commit()
             except:

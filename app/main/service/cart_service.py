@@ -30,8 +30,8 @@ def get_all_carts():
 def add_to_cart(public_id, item_data):
     user = User.query.filter_by(public_id=public_id).first()
     item = Item.query.filter_by(public_id=item_data['item_id']).first()
-    # print(item)
     quantity = item_data['quantity']
+
     if not user:
         message = "User not found"
     if not item:
@@ -40,28 +40,42 @@ def add_to_cart(public_id, item_data):
         quantity = 1
     
     if user and item:
-        try:
-            user._cart._items.append(CartItem(
-                cart_id=public_id,
-                item_id=item.public_id,
-                name=item.name
-                cost=item.cost,
-                quantity=quantity
-            ))
-            db.session.commit()
-        except:
-            db.session.rollback()
-            raise
+        # check if item already in cart
+        cart_item = CartItem.query.filter_by(
+            cart_id=public_id, 
+            item_item=item_data['item_id']
+        )
+        if cart_item:
+            # need to write update cart cost function
+            user._cart.cost += cart_item.cost * quantity
+            cart_item.quantity += quantity
+        # if no item create item
         else:
-            user._cart.cost += item.cost
-            user._cart.size += quantity
-            response_object = {
-                'status': 'success',
-                'message': 'Added item to cart',
-                '_cart.cost': user._cart.cost,
-                '_cart.size': user._cart.size
-            }
-            return response_object, 201
+            try:
+                user._cart._items.append(CartItem(
+                    cart_id=public_id,
+                    item_id=item.public_id,
+                    name=item.name,
+                    cost=item.cost,
+                    quantity=quantity
+                ))
+                db.session.commit()
+            except:
+                db.session.rollback()
+                raise
+            else:
+                # need to write update cart cost function
+                user._cart.cost += item.cost * quantity
+                user._cart.size += quantity
+
+        response_object = {
+            'status': 'success',
+            'message': 'Added item to cart',
+            '_cart.cost': user._cart.cost,
+            '_cart.size': user._cart.size
+        }
+        return response_object, 201
+
     response_object = {
         'status': 'fail',
         'message': message
@@ -78,15 +92,17 @@ def remove_cart_item(public_id, item_id):
         message = "Item not found"
     if user and item:
         try:
-            itemcost = item.cost
+            item_cost = item.cost
+            item_quantity = item.quantity
             db.session.delete(item)
             db.session.commit()
         except:
             db.session.rollback()
             raise
         else:
-            user._cart.size -= 1
-            user._cart.cost -= itemcost
+            # need to write update cart cost function
+            user._cart.size -= item_quantity
+            user._cart.cost -= item_cost * item_quantity
             response_object = {
                 'status': 'success',
                 'message': 'Item removed from cart',
@@ -112,6 +128,7 @@ def empty_cart(public_id):
             db.session.rollback()
             raise
         else:
+            # need to write update cart cost function
             user._cart.cost = 0
             user._cart.size = 0
             db.session.commit()

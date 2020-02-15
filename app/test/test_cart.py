@@ -58,11 +58,11 @@ class TestUserCart(BaseTestCase):
         """ Test for adding items to cart """
         data = create_test_item_1()
         item1_id = data[0]['public_id']
-        print(f"item 1 {item1_id}")
+        # print(f"item 1 {item1_id}")
         self.assertTrue(data[0]['status'] == 'success')
         data = create_test_item_2()
         item2_id = data[0]['public_id']
-        print(f"item2 {item2_id}")
+        # print(f"item2 {item2_id}")
         self.assertTrue(data[0]['status'] == 'success')
         with self.client:
             response = register_user(self)
@@ -70,14 +70,11 @@ class TestUserCart(BaseTestCase):
             self.assertTrue(data['status'] == 'success')
             print(f"user {data['public_id']}")
             cart_route = '/cart/{}/'.format(data['public_id'])
-            print(cart_route)
-            response = self.client.get(cart_route,data=json.dumps(dict(item_id=item1_id)),content_type='application/json')
-            # response = add_item_to_cart(self, cart_route, item1_id)
-            # data = json.loads(response)
-            print(json.loads(response))
-            # self.assertTrue(data['status'] == 'success')
-            # self.assertTrue(data['_cart.cost'] == 14.99)
-            # self.assertTrue(data['_cart.size'] == 1)
-            # print(response)
+            # print(cart_route)
+            response = self.client.get(
+                cart_route,
+                data=json.dumps(dict(item_id=item1_id)),
+                content_type='application/json'
+            )
             
             
