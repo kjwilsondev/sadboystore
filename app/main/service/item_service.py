@@ -5,6 +5,7 @@ from app.main import db
 from app.main.model.user import User
 from app.main.model.item import Item
 from app.main.model.cart import Cart
+from app.main.model.cart_item import CartItem
 
 
 def create_item(data):
@@ -63,29 +64,37 @@ def get_items(name=None, piece=None):
     return items
 
 # returns user carts that contain item
-# def get_cart_users(item_name):
-#     item = Item.query.filter_by(name=item_name).first()
+# def get_cart_users(cart_id):
+#     cart_items = CartItem.query.filter_by(=cart_id).first()
 #     return item._carts
 
-# draft delete function
-# not sure how cart will handle deleted cart items
-# def delete_item(item_public_id):
-#     item = Item.query.filter_by(public_id=item_public_id).first()
-#     name = item.name
-#     if item:
-#         db.session.delete(item)
-#         db.session.commit()
-#         response_object = {
-#             'status': 'success',
-#             'message': 'Successfully deleted item.',
-#             'item_name': name,
-#         }
-#         return response_object, 201
-#     else:
-#         response_object = {
-#             'status': 'fail',
-#             'message': 'Item not found.',
-#         }
-#         return response_object, 409
+# delete item function
+def delete_item(item_public_id):
+    item = Item.query.filter_by(public_id=item_public_id).first()
+    cart_items = CartItem.query.filter_by(item_id=item_public_id).all()
+    if item:
+        if cart_items:
+            try:
+                # delete all cart items
+                for cart_item in cart_items:
+                    db.session.delete(cart_item)
+                db.session.commit()
+            except:
+                db.session.rollback()
+                raise
+        item.selling = False
+        item.available = 0
+        response_object = {
+            'status': 'success',
+            'message': 'Successfully removed item from store.',
+            'item_name': item.name
+        }
+        return response_object, 201
+    else:
+        response_object = {
+            'status': 'fail',
+            'message': 'Item not found.',
+        }
+        return response_object, 409
 
-__all__ = ['create_item', 'get_items', 'get_all_items']
+__all__ = ['create_item', 'get_items', 'get_all_items', 'delete_item']

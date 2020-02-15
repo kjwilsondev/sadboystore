@@ -30,17 +30,21 @@ def get_all_carts():
 def add_to_cart(public_id, item_data):
     user = User.query.filter_by(public_id=public_id).first()
     item = Item.query.filter_by(public_id=item_data['item_id']).first()
-    print(item)
+    # print(item)
     quantity = item_data['quantity']
     if not user:
         message = "User not found"
     if not item:
         message = "Item not found"
+    if not quantity:
+        quantity = 1
+    
     if user and item:
         try:
             user._cart._items.append(CartItem(
                 cart_id=public_id,
                 item_id=item.public_id,
+                name=item.name
                 cost=item.cost,
                 quantity=quantity
             ))
@@ -50,7 +54,7 @@ def add_to_cart(public_id, item_data):
             raise
         else:
             user._cart.cost += item.cost
-            user._cart.size += 1
+            user._cart.size += quantity
             response_object = {
                 'status': 'success',
                 'message': 'Added item to cart',
@@ -102,7 +106,7 @@ def empty_cart(public_id):
     if items:
         try:
             for item in items:
-                print(item)
+                # print(item)
                 db.session.delete(item)
         except:
             db.session.rollback()

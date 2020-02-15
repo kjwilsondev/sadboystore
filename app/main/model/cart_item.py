@@ -17,6 +17,7 @@ class CartItem(db.Model):
     id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     cost = db.Column(db.Float)
     quantity = db.Column(db.Integer, default=1)
+    name = db.Column(db.String)
 
     # Cart fields
     cart_id = db.Column(db.String(100), db.ForeignKey('cart.user_id'), primary_key=True, nullable=False)

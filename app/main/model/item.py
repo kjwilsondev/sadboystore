@@ -14,6 +14,7 @@ class Item(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     public_id = db.Column(db.String(100), unique=True)
     release_date = db.Column(db.DateTime)
+    selling = db.Column(db.Boolean, nullable=False, default=True)
 
     # Item fields
     name = db.Column(db.String(100), nullable=False, default="sadface")
