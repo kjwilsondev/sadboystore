@@ -19,10 +19,11 @@ class OrderItem(db.Model):
     name = db.Column(db.String)
 
     # Cart fields
-    order_id = db.Column(db.String(100), db.ForeignKey('order.user_id'), primary_key=True, nullable=False)
+    order_id = db.Column(db.String(100), db.ForeignKey('order.public_id'), primary_key=True, nullable=False)
+    order = db.relationship('Order')
 
     # Item fields
-    item_id = db.Column(db.String(100), db.ForeignKey('item.public_id'), primary_key=True)
+    item_id = db.Column(db.String(100), db.ForeignKey('item.public_id'), primary_key=True, nullable=False, unique=True)
     item = db.relationship('Item')
 
     def __str__(self):

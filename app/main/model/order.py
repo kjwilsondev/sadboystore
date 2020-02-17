@@ -18,8 +18,7 @@ class Order(db.Model):
     ordered_on = db.Column(db.DateTime)
 
     # User fields
-    user_id = db.Column(db.String(100), db.ForeignKey('user.public_id'), nullable=False)
-    user = db.relationship('User')
+    user_id = db.Column(db.String(100), db.ForeignKey('user.public_id'), nullable=False, primary_key=True)
 
     # Item fields
     _items = db.relationship('OrderItem', cascade='all, delete-orphan')
