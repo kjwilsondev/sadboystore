@@ -39,6 +39,23 @@ class CartItemDto:
         'quantity': fields.Integer(required=False, description='item quantity')
     })
 
+class OrderDto:
+    api = Namespace('order', description='order operations')
+    cart = api.model('order', {
+        'confirmation': fields.String(required=False, description='order confirmation code'),
+        'user_id': fields.String(required=True, description='user id'),
+        'ordered_on': fields.String(required=False, description='order date'),
+        'cost': fields.Float(required=False, description='order cost')
+    })
+
+class OrderItemDto:
+    api = Namespace('order_item', description='order operations')
+    cartitem = api.model('order_item', {
+        'item_id': fields.String(required=True, description='item public id'),
+        'cost': fields.Float(required=False, description='item cost'),
+        'quantity': fields.Integer(required=False, description='item quantity')
+    })
+
 class ItemDto:
     api = Namespace('item', description='item operations')
     item = api.model('item', {

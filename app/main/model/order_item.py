@@ -19,7 +19,7 @@ class OrderItem(db.Model):
     name = db.Column(db.String)
 
     # Cart fields
-    order_id = db.Column(db.String(100), db.ForeignKey('order.public_id'), primary_key=True, nullable=False)
+    order_id = db.Column(db.String(100), db.ForeignKey('order.confirmation'), primary_key=True, nullable=False)
     order = db.relationship('Order')
 
     # Item fields
@@ -27,6 +27,6 @@ class OrderItem(db.Model):
     item = db.relationship('Item')
 
     def __str__(self):
-        return "<CartItem '{}', {}>".format(self.item_id, self.quantity)
+        return "<OrderItem '{}', {}>".format(self.item_id, self.quantity)
 
     #TODO: Make a __repr__

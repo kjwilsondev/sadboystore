@@ -12,7 +12,7 @@ class Order(db.Model):
 
     # Order fields
     id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    public_id = db.Column(db.String(100), unique=True)
+    confirmation = db.Column(db.String(100), unique=True)
     cost = db.Column(db.Float, default=0.0)
     size = db.Column(db.Integer, default=0)
     ordered_on = db.Column(db.DateTime)
