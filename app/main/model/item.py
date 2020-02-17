@@ -25,15 +25,7 @@ class Item(db.Model):
     color = db.Column(db.String(50))
     size = db.Column(db.String(10), nullable=False)
     available = db.Column(db.Integer, nullable=False)
-    # picture = db.relationship("Picture", backref="item.name", lazy=True)
-
-    # Store fields
-    # _carts = db.relationship("CartItem", back_populates="itemcarts")
-    # _carts = db.relationship("Cart", secondary="cart_item", viewonly=True)
-    # _carts = association_proxy('cart_item', 'cart')
-
-    # closets = db.relationship("User", secondary="closet")
-    # orders = db.relationship("User", secondary="order")
+    picture = db.Column(db.String)
 
     def __str__(self):
         return "<Item '{}', '{}'>".format(self.public_id, self.cost)

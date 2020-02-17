@@ -11,6 +11,8 @@ from ..service.cart_service import create_cart
 
 def create_user(data):
     user = User.query.filter_by(email=data['email']).first()
+    # if user has no password:
+        # send user email to set password
     if not user:
         new_user = User(
             public_id=str(uuid.uuid4()),
@@ -61,13 +63,24 @@ def get_all_users():
 # def delete_user(public_id):
 #     user = User.query.filter_by(email=data['email']).first()
 #     if user:
-#         db.session.delete(self)
+#         try:
+#         # delete all cart items
+#         db.session.delete(user._cart)
+#         # delete all closet items
+#         db.session.delete(user._closet)
+#         # delete all order items
+#         db.session.delete(user._orders)
+#         db.session.delete(user)
 #         db.session.commit()
-#         response_object = {
-#             'status': 'success',
-#             'message': 'User deleted.'
-#         }
-#         return response_object, 201
+#         except:
+#             db.session.rollback()
+#             raise
+#         else:
+    #         response_object = {
+    #             'status': 'success',
+    #             'message': 'User deleted.'
+    #         }
+    #         return response_object, 201
 #     else:
 #         response_object = {
 #             'status': 'fail',

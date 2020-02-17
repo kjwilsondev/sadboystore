@@ -1,6 +1,6 @@
 # TODO
 
-## User
+## User ✅
 
 - id [Integer]
 - email (unique) [String]
@@ -10,15 +10,15 @@
 - address [String]
 - city
 - zip code
+- Cart [ForeignKey],[array]
+  - array of items in cart
 - Orders [ForeignKey],[array]
 - Closet [ForeignKey],[array]
   - array of purchased items
-- Cart [ForeignKey],[array]
-  - array of items in cart
 
 ### User Fuctions
 
-Create User
+Create User ✅
 
 Verify Address
 
@@ -30,7 +30,7 @@ Location
 
 - retrieve all users by city or zip code
 
-## Cart
+## Cart ✅
 
 - id [Integer]
 - User [ForeignKey],[integer]
@@ -39,9 +39,9 @@ Location
 
 ### Cart Fuctions
 
-Create Cart
+Create Cart ✅
 
-Add to Cart
+Add to Cart ✅
 
 - add item.id to cart array
 
@@ -59,7 +59,7 @@ Create Order
 
 - Create order from cart contents
 
-## Order
+## Order ✅
 
 - id [Integer]
 - User [ForeignKey],[integer]
@@ -70,10 +70,7 @@ Create Order
 
 ### Order Functions
 
-Create Item
-
-- create each item
-  Email Reciept
+Email Reciept
 
 - Send User name, email, and order to Mailchimp
 - Import template from Mailchimp
@@ -89,18 +86,25 @@ Add to Closet
 
 - Upon delievered status, add order contents to User closet
 
-## Item
+## Item ✅
 
 - id [Integer]
-- name
-- type [String]
-  - types: shirt
+- public_id [String]
+- name [String]
+- category [String]
+  - ex: shirt
 - cost [Integer]
 - picture
+  - ex: "/src/sadface.png"
 
-## Item View
+## Item Function
 
-Color
-Images for each color
-Quantity
-Sizes
+Item Routes Object
+
+GET
+item/name/size
+size route => {size, available}
+
+GET
+item/name/color
+color route => {color, available}

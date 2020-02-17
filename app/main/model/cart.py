@@ -7,7 +7,7 @@ from ..model.cart_item import CartItem
 
 class Cart(db.Model):
     """ 
-    Cart Model for storing user related details
+    Cart Model for storing user cart related details
     """ 
     __tablename__ = "cart"
 
@@ -29,27 +29,3 @@ class Cart(db.Model):
         return "<Cart '{}'>".format(self.user_id)
 
     #TODO: Make a __repr__
-
-    # @classmethod
-    # def remove_cart_item(self, item_public_id):
-    #     for item in self._items:
-    #         if item.public_id == item_public_id:
-    #             self.size -= 1
-    #             self.cost -= item.cost
-    #             response_object = {
-    #                 'status': 'success',
-    #                 'message': 'Successfully removed item.',
-    #                 'item_name': item.name,
-    #             }
-    #             if item.quantity > 0:
-    #                 item.quantity -= 1
-    #                 return response_object, 201
-    #             else:
-    #                 db.session.delete(item)
-    #                 db.session.commit()
-    #                 return response_object, 201
-    #     response_object = {
-    #         'status': 'fail',
-    #         'message': 'Item not in cart',
-    #     }
-    #     return response_object, 409

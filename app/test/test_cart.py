@@ -76,5 +76,7 @@ class TestUserCart(BaseTestCase):
                 data=json.dumps(dict(item_id=item1_id)),
                 content_type='application/json'
             )
+            print(response)
+            
             
             

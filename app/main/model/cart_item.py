@@ -9,7 +9,7 @@ class CartItem(db.Model):
     """
     Cart Item Model association table for retrieving:
         cart items in user cart
-        carts with item in their cart
+        TODO: carts with item in their cart
     """
     __tablename__ = "cart_item"
 

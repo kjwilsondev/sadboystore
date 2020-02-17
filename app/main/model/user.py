@@ -1,8 +1,9 @@
 from .. import db, flask_bcrypt
 import datetime
-from app.main.model.blacklist import BlacklistToken
 from ..config import key
 import jwt
+
+from app.main.model.blacklist import BlacklistToken
 
 # User class inherits from db.Model class which declares the class as a model for sqlalchemy
 class User(db.Model):
@@ -29,8 +30,8 @@ class User(db.Model):
     
     # Store fields
     _cart = db.relationship("Cart", backref="user.public_id", uselist=False)
+    _orders = db.relationship("Order", backref="user")
     # closet_items = db.relationship("Item", secondary="closet")
-    # orders = db.relationship("Item", secondary="order")
     # newsletter = db.Column(db.Boolean)
     # money_spent = db.Column(db.Float)
 
