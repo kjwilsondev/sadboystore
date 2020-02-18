@@ -18,7 +18,7 @@ class Item(db.Model):
 
     # Item fields
     name = db.Column(db.String(100), nullable=False, default="sadface")
-    category = db.Column(db.String(50), nullable=False, default="shirt") # type of clothing
+    category = db.Column(db.String(50), default="shirt") # type of clothing
     cost = db.Column(db.Float, nullable=False, default=15.0)
 
     # Item View fields
