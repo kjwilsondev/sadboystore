@@ -1,5 +1,7 @@
 # TODO
 
+Erase Heroku DB
+
 ## User ✅
 
 - id [Integer]
