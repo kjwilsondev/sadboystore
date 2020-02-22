@@ -69,9 +69,14 @@ def get_item_by_id(public_id):
     return item
 
 # returns user carts that contain item
-# def get_cart_users(cart_id):
-#     cart_items = CartItem.query.filter_by(=cart_id).first()
-#     return item._carts
+# def get_cart_users(item_id):
+#     users = []
+#     cart_items = CartItem.query.filter_by(item_id=item_id).first()
+#     for item in cart_items:
+#         user_id = item.cart_id
+#         user = User.query.filter_by(public_id=user_id).first()
+#         users.append(user)
+#     return users
 
 # delete item function
 def delete_item_by_id(item_public_id):
@@ -120,4 +125,4 @@ def delete_item_by_id(item_public_id):
         }
         return response_object, 409
 
-__all__ = ['create_item', 'get_items_by_name', 'get_all_items', 'delete_item_by_id']
+__all__ = ['create_item', 'get_items_by_name', 'get_item_by_id', 'get_all_items', 'delete_item_by_id']
