@@ -47,7 +47,14 @@ def get_items_by_name(self):
         content_type='application/json'
     )
 
-class TestUserCart(BaseTestCase):
+def get_items_by_id(self, id):
+    route = '/item/id/' + str(id) + '/'
+    return self.client.get(
+        route,
+        content_type='application/json'
+    )
+
+class TestUserItem(BaseTestCase):
     def test_get_all_items(self):
         """ Test for get all store items """
         data = create_test_item_1()
@@ -61,16 +68,42 @@ class TestUserCart(BaseTestCase):
             self.assertEqual(response.status_code, 200)
 
     def test_get_items_by_name(self):
-        """ Test for get all store items """
+        """ Test for get items by name """
         data = create_test_item_1()
         self.assertTrue(data[0]['status'] == 'success')
         data = create_test_item_2()
         self.assertTrue(data[0]['status'] == 'success')
         with self.client:
             response = get_items_by_name(self)
-            print(response)
-            self.assertTrue(response.content_type == 'application/json')
-            self.assertEqual(response.status_code, 200)
+            # print(response)
             response_data = json.loads(response.data)
             # print(len(response_data))
+            self.assertTrue(response.content_type == 'application/json')
+            self.assertEqual(response.status_code, 200)
+
+    def test_get_items_by_id(self):
+        """ Test for get items by id """
+        data = create_test_item_1()
+        self.assertTrue(data[0]['status'] == 'success')
+        item1_id = data[0]['public_id']
+        # print(f"item id {item1_id}")
+        data = create_test_item_2()
+        self.assertTrue(data[0]['status'] == 'success')
+        item2_id = data[0]['public_id']
+        # print(f"item id {item2_id}")
+        with self.client:
+            # item1
+            response = get_items_by_id(self, item1_id)
+            # print(response)
+            response_data = json.loads(response.data)
+            # print(len(response_data))
+            self.assertTrue(response.content_type == 'application/json')
+            self.assertEqual(response.status_code, 200)
+            # item2
+            response = get_items_by_id(self, item2_id)
+            # print(response)
+            response_data = json.loads(response.data)
+            # print(len(response_data))
+            self.assertTrue(response.content_type == 'application/json')
+            self.assertEqual(response.status_code, 200)
             
