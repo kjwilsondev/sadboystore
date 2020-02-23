@@ -28,14 +28,16 @@ def get_all_carts():
 def add_to_cart(public_id, item_data):
     user = User.query.filter_by(public_id=public_id).first()
     item = Item.query.filter_by(public_id=item_data['item_id']).first()
-    quantity = item_data['quantity']
+    try:
+        quantity = item_data['quantity']
+    except KeyError:
+        print("setting quantity to 1")
+        quantity = 1
 
     if not user:
         message = "User not found"
     if not item:
         message = "Item not found"
-    if not quantity:
-        quantity = 1
     
     if user and item:
         # check if item already in cart

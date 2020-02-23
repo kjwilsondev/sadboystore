@@ -59,13 +59,22 @@ class TestUserItem(BaseTestCase):
         """ Test for get all store items """
         data = create_test_item_1()
         self.assertTrue(data[0]['status'] == 'success')
+        item1_id = data[0]['public_id']
+        # print(f"item id {item1_id}")
         data = create_test_item_2()
         self.assertTrue(data[0]['status'] == 'success')
+        item2_id = data[0]['public_id']
+        # print(f"item id {item2_id}")
         with self.client:
             response = get_store_items(self)
-            # print(response)
+            response_data = json.loads(response.data)
             self.assertTrue(response.content_type == 'application/json')
             self.assertEqual(response.status_code, 200)
+            # check if correct amount of items are output
+            self.assertEqual(len(response_data["data"]), 2)
+            # check if correct items are output
+            self.assertEqual(response_data["data"][0]["public_id"], item1_id)
+            self.assertEqual(response_data["data"][1]["public_id"], item2_id)
 
     def test_get_items_by_name(self):
         """ Test for get items by name """
